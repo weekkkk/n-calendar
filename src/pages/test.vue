@@ -3,7 +3,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div></div>
+  <h1>Text</h1>
 </template>
 
 <style lang="scss" scoped></style>

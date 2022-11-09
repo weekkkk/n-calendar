@@ -1,10 +1,15 @@
+/** @format */
+
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 
+/** Шрифт */
+import './assets/font/montserrat/index.scss';
+/** Стили */
+import './assets/style/index.scss';
+
 import App from './app.vue';
 import router from './router';
-
-import './assets/main.css';
 
 const app = createApp(App);
 
