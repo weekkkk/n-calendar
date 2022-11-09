@@ -17,4 +17,8 @@ html {
   line-height: var(--nc-lh-regular);
   color: var(--nc-c-text-100);
 }
+#app {
+  height: 100vh;
+  background-color: var(--nc-c-bg-2-100);
+}
 </style>
