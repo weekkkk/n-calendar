@@ -10,8 +10,6 @@ const props = defineProps({
   /** Год */
   year: { type: Number, default: new Date().getFullYear() },
 });
-/** События */
-const emit = defineEmits(['select']);
 </script>
 
 <template>
@@ -21,7 +19,6 @@ const emit = defineEmits(['select']);
       v-for="i in 6"
       :key="i"
       :value="new Date(year, month, 7 * (i - 1) + 1)"
-      @select="emit('select', $event)"
     >
       <template #default="{ date }">
         <slot :date="date" :outside="month != date.getMonth()" />

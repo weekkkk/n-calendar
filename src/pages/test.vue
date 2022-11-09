@@ -3,19 +3,14 @@
 <script setup lang="ts">
 import NcMonth from '@/components/month/nc-month.vue';
 import NcWeek from '@/components/week/nc-week.vue';
+import NcYear from '@/components/year/nc-year.vue';
+import { ref } from 'vue';
 
-const date = new Date();
-
-console.log(date.getWeek().map((el) => el.toLocaleDateString()));
+const year = ref(2022);
 </script>
 
 <template>
-  <nc-month>
-    <template #default="{ date, outside }">
-      {{ date.getDate() }}
-    </template>
-  </nc-month>
-  <!-- <nc-week /> -->
+  <nc-year />
 </template>
 
 <style lang="scss" scoped></style>

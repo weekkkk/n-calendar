@@ -18,7 +18,8 @@ html {
   color: var(--nc-c-text-100);
 }
 #app {
-  height: 100vh;
+  height: fit-content;
+  min-height: 100vh;
   background-color: var(--nc-c-bg-2-100);
 }
 </style>
