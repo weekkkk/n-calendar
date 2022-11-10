@@ -13,6 +13,9 @@ const value = new Date();
 <template>
   <div class="nc-year">
     <div class="month" v-for="i in 12">
+      <p>
+        {{ new Date(year, i - 1, 1).getMonthName() }}
+      </p>
       <nc-month :month="i - 1" :year="year">
         <template #default="{ date, outside }">
           <nc-date
@@ -33,5 +36,10 @@ const value = new Date();
   grid-template-columns: repeat(4, 1fr);
   grid-row-gap: 32px;
   grid-column-gap: 32px;
+  .month {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 </style>

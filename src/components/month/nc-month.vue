@@ -19,18 +19,11 @@ const { firstDayOfWeek } = useCalendarStore();
   <div class="nc-month">
     <nc-dates
       class="week"
-      v-for="i in 6"
-      :key="i"
       :dates="new Date(year, month, 1).getWeekDates(firstDayOfWeek)"
     >
       <template #default="{ date }">
-        <nc-date v-if="i == 1">
-          {{
-            date
-              .getDayName()
-              .replace(/[aeiouyаоиыуэеёя]/gi, '')
-              .slice(0, 2)
-          }}
+        <nc-date :title="date.getDayName()">
+          {{ date.getShortDayName() }}
         </nc-date>
       </template>
     </nc-dates>
@@ -54,9 +47,11 @@ const { firstDayOfWeek } = useCalendarStore();
   width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 8px;
   .week {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
   }
 }
 </style>
