@@ -2,8 +2,6 @@
 
 <script lang="ts" setup></script>
 
-<template>
-  <header></header>
-</template>
+<template></template>
 
 <style lang="less" scoped></style>

@@ -3,11 +3,11 @@
 <script setup lang="ts">
 import NcMonth from '@/components/month/nc-month.vue';
 import NcDate from '@/components/date/nc-date.vue';
-import { ref } from 'vue';
-
-const year = ref(2022);
-
-const value = new Date();
+/** Свойства */
+const props = defineProps({
+  /** Год */
+  year: { type: Number, default: new Date().getFullYear() },
+});
 </script>
 
 <template>
@@ -18,10 +18,8 @@ const value = new Date();
       </p>
       <nc-month :month="i - 1" :year="year">
         <template #default="{ date, outside }">
-          <nc-date
-            :active="value.toDateString() == date.toDateString()"
-            :secondary="outside"
-          >
+          <!-- :active="value.toDateString() == date.toDateString()" -->
+          <nc-date :secondary="outside">
             {{ date.getDate() }}
           </nc-date>
         </template>
