@@ -1,3 +1,5 @@
 /** @format */
 
-import './getWeek';
+import './getDayName';
+import './getMonthName';
+import './getWeekDates';

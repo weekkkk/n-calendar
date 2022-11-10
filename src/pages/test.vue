@@ -2,7 +2,6 @@
 
 <script setup lang="ts">
 import NcMonth from '@/components/month/nc-month.vue';
-import NcWeek from '@/components/week/nc-week.vue';
 import NcYear from '@/components/year/nc-year.vue';
 import { ref } from 'vue';
 

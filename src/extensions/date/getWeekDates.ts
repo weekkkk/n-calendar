@@ -2,12 +2,11 @@
 
 interface Date {
   /** Возвращает дни недели, к которым относится дата */
-  getWeek(firstDayOfWeek?: number): Date[];
+  getWeekDates(firstDayOfWeek?: number): Date[];
 }
 
-Date.prototype.getWeek = function (firstDayOfWeek: number = 1): Date[] {
+Date.prototype.getWeekDates = function (firstDayOfWeek: number = 1): Date[] {
   const dates: Date[] = [];
-  console.log('firstDayOfWeek', firstDayOfWeek);
   const day = (this.getDay() || 7) - (firstDayOfWeek - 1);
   const year = this.getFullYear();
   const month = this.getMonth();

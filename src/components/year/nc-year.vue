@@ -2,7 +2,6 @@
 
 <script setup lang="ts">
 import NcMonth from '@/components/month/nc-month.vue';
-import NcWeek from '@/components/week/nc-week.vue';
 import NcDate from '@/components/date/nc-date.vue';
 import { ref } from 'vue';
 
@@ -17,10 +16,11 @@ const value = new Date();
       <nc-month :month="i - 1" :year="year">
         <template #default="{ date, outside }">
           <nc-date
-            :value="date"
             :active="value.toDateString() == date.toDateString()"
             :secondary="outside"
-          />
+          >
+            {{ date.getDate() }}
+          </nc-date>
         </template>
       </nc-month>
     </div>

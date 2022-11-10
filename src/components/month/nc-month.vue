@@ -1,8 +1,9 @@
 <!-- @format -->
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import NcWeek from '@/components/week/nc-week.vue';
+import NcDate from '@/components/date/nc-date.vue';
+import NcDates from '@/components/dates/nc-dates.vue';
+import { useCalendarStore } from '@/stores/calendar';
 /** Свойства */
 const props = defineProps({
   /** Месяц */
@@ -10,20 +11,41 @@ const props = defineProps({
   /** Год */
   year: { type: Number, default: new Date().getFullYear() },
 });
+/** Стор */
+const { firstDayOfWeek } = useCalendarStore();
 </script>
 
 <template>
   <div class="nc-month">
-    <nc-week
+    <nc-dates
       class="week"
       v-for="i in 6"
       :key="i"
-      :value="new Date(year, month, 7 * (i - 1) + 1)"
+      :dates="new Date(year, month, 1).getWeekDates(firstDayOfWeek)"
+    >
+      <template #default="{ date }">
+        <nc-date v-if="i == 1">
+          {{
+            date
+              .getDayName()
+              .replace(/[aeiouyаоиыуэеёя]/gi, '')
+              .slice(0, 2)
+          }}
+        </nc-date>
+      </template>
+    </nc-dates>
+    <nc-dates
+      class="week"
+      v-for="i in 6"
+      :key="i"
+      :dates="
+        new Date(year, month, 7 * (i - 1) + 1).getWeekDates(firstDayOfWeek)
+      "
     >
       <template #default="{ date }">
         <slot :date="date" :outside="month != date.getMonth()" />
       </template>
-    </nc-week>
+    </nc-dates>
   </div>
 </template>
 

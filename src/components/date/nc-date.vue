@@ -2,8 +2,6 @@
 <script lang="ts" setup>
 /** Свойства */
 const props = defineProps({
-  /** Значение */
-  value: { type: Date, default: new Date() },
   /** Активность */
   active: { type: Boolean, default: false },
   /** Вторичность */
@@ -13,11 +11,16 @@ const props = defineProps({
 
 <template>
   <span
-    class="nc-date c-text f ai-c jc-c"
-    :class="{ 'a-50': secondary || active, 'bg-brand': active }"
+    class="nc-date f ai-c jc-c"
+    :class="{
+      'a-50': secondary,
+      'bg-brand': active,
+      'c-text': !active,
+      'c-bg-1': active,
+    }"
   >
     <span>
-      {{ value.getDate() }}
+      <slot  />
     </span>
   </span>
 </template>
