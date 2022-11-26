@@ -6,7 +6,7 @@
     --nc-c-alpha: 1;
 
     // color brand
-    --nc-c-brand: 75, 196, 248;
+    --nc-c-focus: 75, 196, 248;
     // color succes
     --nc-c-succes: 75, 248, 134;
     // color warning
@@ -14,9 +14,9 @@
     // color danger
     --nc-c-danger: 248, 75, 75;
     // color text
-    --nc-c-text: 75, 75, 75;
+    --nc-c-base: 75, 75, 75;
     // color info
-    --nc-c-info: 173, 173, 173;
+    --nc-c-secondary: 173, 173, 173;
 
     // BACKGROUND
     // background 1
@@ -32,7 +32,7 @@
 
     // COLOR
     // color text
-    --nc-c-text-100: rgba(var(--nc-c-text), var(--nc-c-alpha));
+    --nc-c-base-100: rgba(var(--nc-c-base), var(--nc-c-alpha));
 
     // BACKGROUND
     // background 1

@@ -3,7 +3,9 @@
 <script lang="ts" setup></script>
 
 <template>
-  <header></header>
+  <div class="nc-column">
+  
+  </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="less" scoped></style>

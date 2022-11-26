@@ -3,8 +3,8 @@
 :root {
 
     // COLOR
-    .c-brand {
-        color: rgba(var(--nc-c-brand), var(--nc-c-alpha));
+    .c-focus {
+        color: rgba(var(--nc-c-focus), var(--nc-c-alpha));
     }
 
     .c-succes {
@@ -19,12 +19,12 @@
         color: rgba(var(--nc-c-danger), var(--nc-c-alpha));
     }
 
-    .c-text {
-        color: rgba(var(--nc-c-text), var(--nc-c-alpha));
+    .c-base {
+        color: rgba(var(--nc-c-base), var(--nc-c-alpha));
     }
 
-    .c-info {
-        color: rgba(var(--nc-c-info), var(--nc-c-alpha));
+    .c-secondary {
+        color: rgba(var(--nc-c-secondary), var(--nc-c-alpha));
     }
 
     .c-bg-1 {
@@ -45,7 +45,7 @@
 
     // BACKGROUND
     .bg-brand {
-        background-color: rgba(var(--nc-c-brand), var(--nc-c-alpha));
+        background-color: rgba(var(--nc-c-focus), var(--nc-c-alpha));
     }
 
     .bg-success {
@@ -61,11 +61,11 @@
     }
 
     .bg-text {
-        background-color: rgba(var(--nc-c-text), var(--nc-c-alpha));
+        background-color: rgba(var(--nc-c-base), var(--nc-c-alpha));
     }
 
     .bg-info {
-        background-color: rgba(var(--nc-c-info), var(--nc-c-alpha));
+        background-color: rgba(var(--nc-c-secondary), var(--nc-c-alpha));
     }
 
     .bg-1 {

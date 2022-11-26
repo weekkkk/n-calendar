@@ -1,7 +1,11 @@
-@import "./color/index.scss";
-@import "./indent/index.scss";
-@import "./line-height/index.scss";
-@import "./font-size/index.scss";
-@import "./font-weight/index.scss";
-@import "./flex/index.scss";
-@import "./flex/gap/index.scss";
+/** @format */
+
+@import "./color/index";
+@import "./indent/index";
+@import "./line-height/index";
+@import "./font-size/index";
+@import "./font-weight/index";
+@import "./flex/index";
+@import "./flex/gap/index";
+
+@import "./nc-vars/index";

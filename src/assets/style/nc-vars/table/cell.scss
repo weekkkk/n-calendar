@@ -1,0 +1,17 @@
+/** @format */
+
+:root {
+  // Высота ячейки
+  --nc-cell-h: 72px;
+  --nc-cell-head-h: 106px;
+  --nc-cell-head-w: 88px;
+
+  // Текст
+  --nc-cell-c: rgba(var(--nc-c-secondary), var(--nc-c-alpha));
+
+  // Обводка ячейки
+  --nc-cell-bw: 1px;
+  --nc-cell-bs: solid;
+  --nc-cell-bc: var(--nc-cell-c);
+  --nc-cell-b: var(--nc-cell-bw) var(--nc-cell-bs) var(--nc-cell-bc);
+}
