@@ -3,11 +3,17 @@
 <script lang="ts" setup>
 import ncCell from '@/components/cell/nc-cell.vue';
 import { StatusEnum } from '@/enums';
+import { HourIntervalModel } from '@/models';
 import type { PropType } from 'vue';
 /** Свойства */
 const props = defineProps({
   /** Дата */
   date: { type: Date, default: new Date() },
+  /** Интервал часов */
+  interval: {
+    type: Object as PropType<HourIntervalModel>,
+    default: new HourIntervalModel(),
+  },
   /** Статус */
   status: { type: Number as PropType<StatusEnum>, default: StatusEnum.Base },
 });
@@ -26,7 +32,7 @@ const props = defineProps({
       <h3 class="fw-medium">{{ date.getDate() }}</h3>
     </nc-cell>
     <!-- Ячейка -->
-    <nc-cell :status="StatusEnum.Secondary" v-for="i in 24"></nc-cell>
+    <nc-cell :status="StatusEnum.Secondary" v-for="hour in interval.Hours" />
   </div>
 </template>
 
