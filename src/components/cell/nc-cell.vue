@@ -5,8 +5,6 @@ import { StatusEnum } from "@/enums";
 import { computed, type PropType } from "vue";
 /** Свойства */
 const props = defineProps({
-  /** Дата */
-  date: { type: Date, default: new Date() },
   /** Статус */
   status: { type: Number as PropType<StatusEnum>, default: StatusEnum.Base },
 });
@@ -33,7 +31,7 @@ const color = computed(() =>
 
 <template>
   <div class="nc-cell">
-    <slot :day="date.getDay()" :date="date.getDate()" />
+    <slot />
   </div>
 </template>
 
@@ -42,6 +40,7 @@ const color = computed(() =>
   display: inline-flex;
   --nc-cell-c: rgba(v-bind(color), var(--nc-c-alpha));
   color: var(--nc-cell-c);
-  border-bottom: var(--nc-cell-b);
+  --nc-cell-bc: var(--nc-cell-c);
+  border-bottom: var(--nc-cell-bw) var(--nc-cell-bs) var(--nc-cell-bc);
 }
 </style>
