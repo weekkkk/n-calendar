@@ -8,6 +8,7 @@ import ncTable from '@/components/table/nc-table.vue';
 import { StatusEnum } from '@/enums';
 import { HourIntervalModel } from '@/models';
 const interval = new HourIntervalModel();
+const today = new Date().getShortDate();
 </script>
 
 <template>
@@ -29,20 +30,19 @@ const interval = new HourIntervalModel();
     </template>
     <!-- Колонки -->
     <template #default="{ date }">
-      <nc-column :date="date">
-        <template #head>
+      <nc-column
+        :date="date"
+        :status="!today.getCompare(date) ? StatusEnum.Danger : StatusEnum.Base"
+      >
+        <template #head="{ status }">
           <nc-cell
             class="cell head bg-1 ai-c jc-c fd-col rg-2 p-3"
-            :status="StatusEnum.Base"
+            :status="status"
           >
             <span class="fw-medium lh-compact">
               {{ date.getShortDayName() }}
             </span>
-            <nc-button
-              border
-              class="date-n-btn br-3 p-2"
-              :status="StatusEnum.Base"
-            >
+            <nc-button border class="date-n-btn p-2" :status="status">
               <h3 class="fw-medium">{{ date.getDate() }}</h3>
             </nc-button>
           </nc-cell>

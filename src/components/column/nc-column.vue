@@ -25,7 +25,7 @@ const countRows = computed(() => props.interval.Hours.length)
   <div class="nc-column">
     <!-- Шапка -->
     <div class="cell head">
-      <slot name="head" />
+      <slot name="head" :status="status" />
     </div>
     <!-- Ячейка -->
     <slot />
