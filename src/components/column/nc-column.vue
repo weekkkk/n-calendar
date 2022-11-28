@@ -53,7 +53,7 @@ const countRows = computed(() => props.interval.Hours.length)
     }
   }
   &:not(.head) {
-    min-width: 224px;
+    min-width: var(--nc-cell-w);
   }
 }
 </style>

@@ -1,6 +1,7 @@
 <!-- @format -->
 
 <script setup lang="ts">
+import ncButton from '@/components/button/nc-button.vue';
 import ncCell from '@/components/cell/nc-cell.vue';
 import ncColumn from '@/components/column/nc-column.vue';
 import ncTable from '@/components/table/nc-table.vue';
@@ -10,7 +11,7 @@ const interval = new HourIntervalModel();
 </script>
 
 <template>
-  <nc-table columns="var(--nc-cell-head-w) repeat(7, 1fr)">
+  <nc-table class="cg-3" columns="var(--nc-cell-head-w) repeat(7, 1fr)">
     <!-- Колка-заголовок -->
     <template #hours>
       <nc-column class="head">
@@ -37,7 +38,13 @@ const interval = new HourIntervalModel();
             <span class="fw-medium lh-compact">
               {{ date.getShortDayName() }}
             </span>
-            <h3 class="fw-medium">{{ date.getDate() }}</h3>
+            <nc-button
+              border
+              class="date-n-btn br-3 p-2"
+              :status="StatusEnum.Base"
+            >
+              <h3 class="fw-medium">{{ date.getDate() }}</h3>
+            </nc-button>
           </nc-cell>
         </template>
         <nc-cell
@@ -50,4 +57,9 @@ const interval = new HourIntervalModel();
   </nc-table>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.date-n-btn {
+  width: 48px;
+  height: 48px;
+}
+</style>

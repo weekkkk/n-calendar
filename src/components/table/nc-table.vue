@@ -1,9 +1,7 @@
 <!-- @format -->
 
 <script lang="ts" setup>
-import type { Prop, PropType } from 'vue';
-import { StatusEnum } from '@/enums';
-import ncCell from '@/components/cell/nc-cell.vue';
+import type { PropType } from 'vue';
 /** Свойства */
 const props = defineProps({
   /** Даты */
@@ -17,14 +15,14 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="table cg-3">
+  <div class="nc-table">
     <slot name="hours" />
     <slot v-for="date in dates" :date="date" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-.table {
+.nc-table {
   display: grid;
   grid-auto-flow: column;
   overflow: auto;

@@ -1,0 +1,11 @@
+/** @format */
+
+:root {
+  // Цвет кнопки
+  --nc-button-c: var(--nc-c-base);
+
+  // Стиль обводки
+  --nc-button-bs: solid;
+  --nc-button-bw: 1px;
+  --nc-button-transition: 0.5s ease-in-out;
+}
