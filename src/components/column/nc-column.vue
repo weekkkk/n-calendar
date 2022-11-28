@@ -4,7 +4,7 @@
 import ncCell from '@/components/cell/nc-cell.vue';
 import { StatusEnum } from '@/enums';
 import { HourIntervalModel } from '@/models';
-import type { PropType } from 'vue';
+import { computed, type PropType } from 'vue';
 /** Свойства */
 const props = defineProps({
   /** Дата */
@@ -17,46 +17,36 @@ const props = defineProps({
   /** Статус */
   status: { type: Number as PropType<StatusEnum>, default: StatusEnum.Base },
 });
+/** Кол-во строк */
+const countRows = computed(() => props.interval.Hours.length)
 </script>
 
 <template>
   <div class="nc-column">
     <!-- Шапка -->
-    <nc-cell
-      class="cell head bg-1 ai-c jc-c fd-col rg-2 p-3"
-      :status="StatusEnum.Base"
-    >
-      <span class="fw-medium lh-compact">
-        {{ date.getShortDayName() }}
-      </span>
-      <h3 class="fw-medium">{{ date.getDate() }}</h3>
-    </nc-cell>
+    <div class="cell head">
+      <slot name="head" />
+    </div>
     <!-- Ячейка -->
-    <nc-cell :status="StatusEnum.Secondary" v-for="hour in interval.Hours" />
+    <slot />
   </div>
 </template>
 
 <style lang="scss" scoped>
 .nc-column {
   display: inline-grid;
-  grid-auto-flow: row;
-  grid-template-rows: var(--nc-cell-head-h) repeat(24, var(--nc-cell-h));
+  grid-template-rows: var(--nc-cell-head-h) repeat(
+      v-bind(countRows),
+      minmax(var(--nc-cell-h), 1fr)
+    );
   &.head {
     position: sticky;
     left: 0;
     z-index: 1;
-    .cell {
-      align-items: center;
-      justify-content: flex-end;
-      &:not(:first-child) {
-        transform: translateY(50%);
-      }
-      &.head {
-        z-index: 1;
-      }
-    }
   }
   > .cell {
+    display: inline-grid;
+    height: 100%;
     &.head {
       position: sticky;
       top: 0;

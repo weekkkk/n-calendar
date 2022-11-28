@@ -18,12 +18,7 @@ const props = defineProps({
 
 <template>
   <div class="table cg-3">
-    <!-- <div class="col head">
-      <div class="cell head bg-1 a-70"></div>
-      <div class="cell bg-1 c-secondary a-70 fw-medium p-3" v-for="i in 23">
-        {{ i }}:00
-      </div>
-    </div> -->
+    <slot name="hours" />
     <slot v-for="date in dates" :date="date" />
   </div>
 </template>
@@ -34,6 +29,7 @@ const props = defineProps({
   grid-auto-flow: column;
   overflow: auto;
   height: fit-content;
+  height: 100%;
   max-height: 100%;
   grid-template-columns: v-bind(columns);
 }
