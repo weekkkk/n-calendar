@@ -30,5 +30,8 @@ const props = defineProps({
   height: 100%;
   max-height: 100%;
   grid-template-columns: v-bind(columns);
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 }
 </style>

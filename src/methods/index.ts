@@ -2,4 +2,6 @@
 
 /** Вернуть цвет по статусу */
 import getColorByStatus from './getColorByStatus';
-export { getColorByStatus };
+/** Вернуть статус по доте */
+import getStatusByDate from './getStatusByDate';
+export { getColorByStatus, getStatusByDate };

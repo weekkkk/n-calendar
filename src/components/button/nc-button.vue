@@ -34,7 +34,7 @@ const props = defineProps({
   border: none;
   cursor: pointer;
   outline: none;
-  transition: var(--nc-button-transition);
+  // transition: var(--nc-button-transition);
 
   &.is-border {
     color: rgb(var(--nc-button-c));
