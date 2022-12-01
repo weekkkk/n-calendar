@@ -7,19 +7,19 @@ import ncColumn from '@/components/column/nc-column.vue';
 import ncTable from '@/components/table/nc-table.vue';
 import { StatusEnum } from '@/enums';
 import { HourIntervalModel } from '@/models';
-import { computed, ref, watch } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCalendarStore } from '@/stores/calendar';
 import { getStatusByDate } from '@/methods';
-
+/** Интервал видимых часов */
 const interval = new HourIntervalModel();
-
+/** Текущий год */
 const route = useRoute();
-
+/** Текущий год */
 const calendar = useCalendarStore();
-
+/** Кол-во видимых дат */
 const count = Number(route.params.count);
-
+/** Видимые в таблице даты */
 const dates = computed(() => {
   if (count == 7) return calendar.selectDate.getWeekDates();
   const dates: Date[] = [];

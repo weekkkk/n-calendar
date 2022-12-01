@@ -24,7 +24,7 @@ const props = defineProps({
 <style lang="scss" scoped>
 .nc-table {
   display: grid;
-  grid-auto-flow: column;
+  // grid-auto-flow: column;
   overflow: auto;
   height: fit-content;
   height: 100%;
