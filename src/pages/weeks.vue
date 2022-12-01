@@ -8,14 +8,14 @@ import { getStatusByDate } from '@/methods';
 import { useCalendarStore } from '@/stores/calendar';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-/** Текущий год */
+/** Текущий роут */
 const route = useRoute();
 /** Текущий год */
 const calendar = useCalendarStore();
 /** Кол-во видимых дат */
 const count = Number(route.params.count);
 /** Видимые в таблице даты */
-const datess = computed(() => {
+const dates = computed(() => {
   if (count == 6) return calendar.selectDate.getMonthDates();
   let dates: Date[] = [];
   const date = calendar.selectDate.getClone();
@@ -28,7 +28,7 @@ const datess = computed(() => {
 </script>
 
 <template>
-  <nc-table class="g-3" :dates="datess" columns="repeat(7, 1fr)">
+  <nc-table class="g-3" :dates="dates" columns="repeat(7, 1fr)">
     <template #default="{ date }">
       <nc-cell
         class="cell head bg-1 ai-c jc-c fd-col rg-2 p-3"

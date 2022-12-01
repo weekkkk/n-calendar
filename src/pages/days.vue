@@ -13,7 +13,7 @@ import { useCalendarStore } from '@/stores/calendar';
 import { getStatusByDate } from '@/methods';
 /** Интервал видимых часов */
 const interval = new HourIntervalModel();
-/** Текущий год */
+/** Текущий роут */
 const route = useRoute();
 /** Текущий год */
 const calendar = useCalendarStore();

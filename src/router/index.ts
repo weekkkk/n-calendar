@@ -20,6 +20,12 @@ const router = createRouter({
           path: '/weeks/:count',
           component: () => import('@/pages/weeks.vue'),
         },
+        {
+          name: 'months',
+          path: '/months/:count',
+          component: () => import('@/pages/monts.vue'),
+        },
+
       ],
     },
   ],
