@@ -7,9 +7,10 @@ interface Date {
 
 Date.prototype.getMonthDates = function (firstDayOfWeek: number = 1): Date[] {
   let dates: Date[] = [];
-  const firstDate = this.getClone();
   for (let i = 0; i < 6; i++) {
-    firstDate.setDate(i * 7 + 1);
+    const firstDate = this.getClone();
+    const day = firstDate.getDay() || 7;
+    firstDate.setDate(i * 7 - day + 2);
     dates = dates.concat(firstDate.getWeekDates(firstDayOfWeek));
   }
   return dates;

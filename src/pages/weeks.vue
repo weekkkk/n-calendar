@@ -28,7 +28,7 @@ const dates = computed(() => {
 </script>
 
 <template>
-  <nc-table class="g-3" :dates="dates" columns="repeat(7, 1fr)">
+  <nc-table class="weeks-table g-3" :dates="dates" columns="repeat(7, 1fr)">
     <template #default="{ date }">
       <nc-cell
         class="cell head bg-1 ai-c jc-c fd-col rg-2 p-3"
@@ -51,8 +51,11 @@ const dates = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.date-n-btn {
-  width: 48px;
-  height: 48px;
+.weeks-table {
+  grid-auto-rows: min-content;
+  .date-n-btn {
+    width: 48px;
+    height: 48px;
+  }
 }
 </style>

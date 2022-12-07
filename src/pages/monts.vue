@@ -37,22 +37,25 @@ const dates = computed(() => {
 </script>
 
 <template>
-  <nc-table class="g-3" :dates="dates" columns="repeat(3, 1fr)">
+  <nc-table class="months-table g-3" :dates="dates" columns="repeat(4, 1fr)">
     <template #default="{ date }">
-      <div>
+      <div class="month-wrap">
         {{ date.getMonthName() }}
         <nc-table
-          class="g-1"
+          class="month-table g-1"
           :dates="date.getMonthDates()"
           columns="repeat(7, 1fr)"
         >
-          <template #default="{ date }">
+          <template #default="slotData">
             <nc-button
-              @click="calendar.setSelectDate(date)"
+              class="month-date-n-btn"
+              @click="calendar.setSelectDate(slotData.date)"
               border
-              :status="getStatusByDate(date)"
+              :status="getStatusByDate(slotData.date)"
             >
-              {{ date.getDate() }}
+              <span class="f ai-c jc-c">
+                {{ slotData.date.getDate() }}
+              </span>
             </nc-button>
           </template>
         </nc-table>
@@ -61,4 +64,26 @@ const dates = computed(() => {
   </nc-table>
 </template>
 
-<style lang="less" scoped></style>
+<style lang="scss" scoped>
+.months-table {
+  grid-auto-rows: min-content;
+  .month-wrap {
+    height: fit-content;
+    .month-table {
+      grid-auto-rows: min-content;
+      height: fit-content;
+      .month-date-n-btn {
+        position: relative;
+        padding-bottom: 100%;
+        > span {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+        }
+      }
+    }
+  }
+}
+</style>

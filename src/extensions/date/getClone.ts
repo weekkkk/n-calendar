@@ -6,5 +6,5 @@ interface Date {
 }
 
 Date.prototype.getClone = function (): Date {
-  return new Date(this.toUTCString());
+  return new Date(this);
 };

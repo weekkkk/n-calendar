@@ -14,8 +14,7 @@ export const useCalendarStore = defineStore('calendar', () => {
   const selectDate = ref<Date>(new Date().getShortDate());
   /** Установить выбранную дату */
   const setSelectDate = (date: Date) => {
-    console.log('setSelectDate');
-    selectDate.value = date.getShortDate();
+    selectDate.value = date.getShortDate().getClone();
   };
   return { firstDayOfWeek, selectDate, setSelectDate };
 });
