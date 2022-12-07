@@ -1,7 +1,7 @@
 /** @format */
 
 import { createRouter, createWebHistory } from 'vue-router';
-
+import { MONTHS, WEEKS, DAYS } from './names';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -11,21 +11,20 @@ const router = createRouter({
       component: () => import('@/layout/layout.vue'),
       children: [
         {
-          name: 'days',
-          path: '/days/:count',
-          component: () => import('@/pages/days.vue'),
+          name: MONTHS,
+          path: `${MONTHS}/:count`,
+          component: () => import('@/pages/monts.vue'),
         },
         {
-          name: 'weeks',
-          path: '/weeks/:count',
+          name: WEEKS,
+          path: `${WEEKS}/:count`,
           component: () => import('@/pages/weeks.vue'),
         },
         {
-          name: 'months',
-          path: '/months/:count',
-          component: () => import('@/pages/monts.vue'),
+          name: DAYS,
+          path: `${DAYS}/:count`,
+          component: () => import('@/pages/days.vue'),
         },
-
       ],
     },
   ],

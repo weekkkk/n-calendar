@@ -1,8 +1,9 @@
 /** @format */
 
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
-import { StatusEnum } from '@/enums';
+// import { DAYS } from '@/router/names';
+// import { useRouter } from 'vue-router';
 
 export const useCalendarStore = defineStore('calendar', () => {
   /** Первый день недели */
@@ -16,5 +17,9 @@ export const useCalendarStore = defineStore('calendar', () => {
   const setSelectDate = (date: Date) => {
     selectDate.value = date.getShortDate().getClone();
   };
-  return { firstDayOfWeek, selectDate, setSelectDate };
+  return {
+    firstDayOfWeek,
+    selectDate,
+    setSelectDate,
+  };
 });

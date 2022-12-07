@@ -5,26 +5,34 @@ import ncButton from '@/components/button/nc-button.vue';
 import ncCell from '@/components/cell/nc-cell.vue';
 import ncTable from '@/components/table/nc-table.vue';
 import { getStatusByDate } from '@/methods';
+import { DAYS } from '@/router/names';
 import { useCalendarStore } from '@/stores/calendar';
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { computed, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 /** Текущий роут */
 const route = useRoute();
 /** Текущий год */
-const calendar = useCalendarStore();
+const calendarStore = useCalendarStore();
 /** Кол-во видимых дат */
 const count = Number(route.params.count);
 /** Видимые в таблице даты */
 const dates = computed(() => {
-  if (count == 6) return calendar.selectDate.getMonthDates();
+  if (count == 6) return calendarStore.selectDate.getMonthDates();
   let dates: Date[] = [];
-  const date = calendar.selectDate.getClone();
+  const date = calendarStore.selectDate.getClone();
   for (let i = 0; i < count; i++) {
     date.setDate(date.getDate() + i * 7);
     dates = dates.concat(date.getWeekDates());
   }
   return dates;
 });
+/** Роутер */
+const router = useRouter();
+/** Выбор даты и переход к дню */
+const setSelectDateAndPushToDay = (date: Date) => {
+  calendarStore.setSelectDate(date);
+  router.push({ name: DAYS, params: { count: 1 } });
+};
 </script>
 
 <template>
@@ -38,7 +46,7 @@ const dates = computed(() => {
           {{ date.getShortDayName() }}
         </span>
         <nc-button
-          @click="calendar.setSelectDate(date)"
+          @click="setSelectDateAndPushToDay(date)"
           border
           class="date-n-btn p-2"
           :status="getStatusByDate(date)"

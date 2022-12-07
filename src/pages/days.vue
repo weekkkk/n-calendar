@@ -7,7 +7,7 @@ import ncColumn from '@/components/column/nc-column.vue';
 import ncTable from '@/components/table/nc-table.vue';
 import { StatusEnum } from '@/enums';
 import { HourIntervalModel } from '@/models';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useCalendarStore } from '@/stores/calendar';
 import { getStatusByDate } from '@/methods';
@@ -15,17 +15,19 @@ import { getStatusByDate } from '@/methods';
 const interval = new HourIntervalModel();
 /** Текущий роут */
 const route = useRoute();
-/** Текущий год */
-const calendar = useCalendarStore();
+/** Стор календаря */
+const calendarStore = useCalendarStore();
+/** Локальная дата */
+const localDate = ref(calendarStore.selectDate);
 /** Кол-во видимых дат */
 const count = Number(route.params.count);
 /** Видимые в таблице даты */
 const dates = computed(() => {
-  if (count == 7) return calendar.selectDate.getWeekDates();
+  if (count == 7) return localDate.value.getWeekDates();
   const dates: Date[] = [];
   let date: Date;
   for (let i = 0; i < count; i++) {
-    date = calendar.selectDate.getClone();
+    date = localDate.value.getClone();
     date.setDate(date.getDate() + i);
     dates.push(date);
   }
@@ -41,7 +43,7 @@ const dates = computed(() => {
   >
     <!-- Колка-заголовок -->
     <template #hours>
-      <nc-column class="head">
+      <nc-column class="head rg-3">
         <template #head>
           <div class="bg-1" />
         </template>
@@ -56,7 +58,7 @@ const dates = computed(() => {
     </template>
     <!-- Колонки -->
     <template #default="{ date }">
-      <nc-column :date="date" :status="getStatusByDate(date)">
+      <nc-column class="rg-3" :date="date" :status="getStatusByDate(date)">
         <template #head="{ status }">
           <nc-cell
             class="cell head bg-1 ai-c jc-c fd-col rg-2 p-3"
@@ -66,7 +68,7 @@ const dates = computed(() => {
               {{ date.getShortDayName() }}
             </span>
             <nc-button
-              @click="calendar.setSelectDate(date)"
+              @click="calendarStore.setSelectDate(date)"
               border
               class="date-n-btn p-2"
               :status="status"

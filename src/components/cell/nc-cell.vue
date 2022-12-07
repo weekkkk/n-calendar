@@ -23,6 +23,6 @@ const props = defineProps({
   --nc-cell-c: rgba(v-bind(getColorByStatus(props.status)), var(--nc-c-alpha));
   color: var(--nc-cell-c);
   --nc-cell-bc: var(--nc-cell-c);
-  border-bottom: var(--nc-cell-bw) var(--nc-cell-bs) var(--nc-cell-bc);
+  border: var(--nc-cell-bw) var(--nc-cell-bs) var(--nc-cell-bc);
 }
 </style>

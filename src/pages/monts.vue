@@ -4,19 +4,20 @@
 import ncButton from '@/components/button/nc-button.vue';
 import ncTable from '@/components/table/nc-table.vue';
 import { getStatusByDate } from '@/methods';
+import { DAYS } from '@/router/names';
 import { useCalendarStore } from '@/stores/calendar';
 import { computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 /** Текущий роут */
 const route = useRoute();
 /** Текущий год */
-const calendar = useCalendarStore();
+const calendarStore = useCalendarStore();
 /** Кол-во видимых дат */
 const count = Number(route.params.count);
 /** Видимые в таблице месяцы */
 const dates = computed(() => {
   const dates: Date[] = [];
-  const date = calendar.selectDate.getClone();
+  const date = calendarStore.selectDate.getClone();
   date.setDate(1);
   if (count == 12)
     for (let i = 0; i < count; i++) {
@@ -26,7 +27,7 @@ const dates = computed(() => {
   else
     for (
       let i = date.getMonth();
-      i < count + calendar.selectDate.getMonth();
+      i < count + calendarStore.selectDate.getMonth();
       i++
     ) {
       date.setMonth(i);
@@ -34,6 +35,13 @@ const dates = computed(() => {
     }
   return dates;
 });
+/** Роутер */
+const router = useRouter();
+/** Выбор даты и переход к дню */
+const setSelectDateAndPushToDay = (date: Date) => {
+  calendarStore.setSelectDate(date);
+  router.push({ name: DAYS, params: { count: 1 } });
+};
 </script>
 
 <template>
@@ -49,7 +57,7 @@ const dates = computed(() => {
           <template #default="slotData">
             <nc-button
               class="month-date-n-btn"
-              @click="calendar.setSelectDate(slotData.date)"
+              @click="setSelectDateAndPushToDay(slotData.date)"
               border
               :status="getStatusByDate(slotData.date)"
             >
