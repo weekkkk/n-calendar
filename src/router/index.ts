@@ -12,17 +12,17 @@ const router = createRouter({
       children: [
         {
           name: MONTHS,
-          path: `${MONTHS}/:count`,
+          path: `${MONTHS}/:count/:year/:month/:date`,
           component: () => import('@/pages/monts.vue'),
         },
         {
           name: WEEKS,
-          path: `${WEEKS}/:count`,
+          path: `${WEEKS}/:count/:year/:month/:date`,
           component: () => import('@/pages/weeks.vue'),
         },
         {
           name: DAYS,
-          path: `${DAYS}/:count`,
+          path: `${DAYS}/:count/:year/:month/:date`,
           component: () => import('@/pages/days.vue'),
         },
       ],

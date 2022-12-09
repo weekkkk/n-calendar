@@ -5,19 +5,33 @@ import ncButton from '@/components/button/nc-button.vue';
 import ncTable from '@/components/table/nc-table.vue';
 import { getStatusByDate } from '@/methods';
 import { DAYS } from '@/router/names';
-import { useCalendarStore } from '@/stores/calendar';
-import { computed } from 'vue';
+import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+
 /** Текущий роут */
 const route = useRoute();
-/** Текущий год */
-const calendarStore = useCalendarStore();
+/** Данные роута */
+const routeParams: {
+  count: number;
+  year: number;
+  month: number;
+  date: number;
+} = {
+  count: Number(route.params.count),
+  year: Number(route.params.year),
+  month: Number(route.params.month),
+  date: Number(route.params.date),
+};
 /** Кол-во видимых дат */
-const count = Number(route.params.count);
+const count = Number(routeParams.count);
+/** Выбранная дата */
+const selectDate = ref(
+  new Date(routeParams.year, routeParams.month - 1, routeParams.date)
+);
 /** Видимые в таблице месяцы */
 const dates = computed(() => {
   const dates: Date[] = [];
-  const date = calendarStore.selectDate.getClone();
+  const date = selectDate.value.getClone();
   date.setDate(1);
   if (count == 12)
     for (let i = 0; i < count; i++) {
@@ -27,7 +41,7 @@ const dates = computed(() => {
   else
     for (
       let i = date.getMonth();
-      i < count + calendarStore.selectDate.getMonth();
+      i < count + selectDate.value.getMonth();
       i++
     ) {
       date.setMonth(i);
@@ -39,13 +53,21 @@ const dates = computed(() => {
 const router = useRouter();
 /** Выбор даты и переход к дню */
 const setSelectDateAndPushToDay = (date: Date) => {
-  calendarStore.setSelectDate(date);
-  router.push({ name: DAYS, params: { count: 1 } });
+  selectDate.value = date.getClone();
+  router.push({
+    name: DAYS,
+    params: {
+      count: 1,
+      year: selectDate.value.getFullYear(),
+      month: selectDate.value.getMonth() + 1,
+      date: selectDate.value.getDate(),
+    },
+  });
 };
 </script>
 
 <template>
-  <nc-table class="months-table g-3" :dates="dates" columns="repeat(4, 1fr)">
+  <nc-table class="months-table g-3" :dates="dates" columns="repeat(3, 1fr)">
     <template #default="{ date }">
       <div class="month-wrap">
         {{ date.getMonthName() }}
@@ -59,7 +81,7 @@ const setSelectDateAndPushToDay = (date: Date) => {
               class="month-date-n-btn"
               @click="setSelectDateAndPushToDay(slotData.date)"
               border
-              :status="getStatusByDate(slotData.date)"
+              :status="getStatusByDate(slotData.date, selectDate)"
             >
               <span class="f ai-c jc-c">
                 {{ slotData.date.getDate() }}

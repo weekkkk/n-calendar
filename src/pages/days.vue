@@ -9,31 +9,59 @@ import ncTask from '@/components/task/nc-task.vue';
 import { StatusEnum } from '@/enums';
 import { HourIntervalModel } from '@/models';
 import { computed, ref, reactive } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useCalendarStore } from '@/stores/calendar';
 import { getStatusByDate } from '@/methods';
+import { DAYS } from '@/router/names';
 /** Интервал видимых часов */
 const interval = new HourIntervalModel();
 /** Текущий роут */
 const route = useRoute();
-/** Стор календаря */
-const calendarStore = useCalendarStore();
-/** Локальная дата */
-const localDate = ref(calendarStore.selectDate);
+/** Данные роута */
+const routeParams: {
+  count: number;
+  year: number;
+  month: number;
+  date: number;
+} = {
+  count: Number(route.params.count),
+  year: Number(route.params.year),
+  month: Number(route.params.month),
+  date: Number(route.params.date),
+};
 /** Кол-во видимых дат */
-const count = Number(route.params.count);
+const count = Number(routeParams.count);
+/** Выбранная дата */
+const selectDate = ref(
+  new Date(routeParams.year, routeParams.month, routeParams.date)
+);
 /** Видимые в таблице даты */
 const dates = computed(() => {
-  if (count == 7) return localDate.value.getWeekDates();
+  if (count == 7) return selectDate.value.getWeekDates();
   const dates: Date[] = [];
   let date: Date;
   for (let i = 0; i < count; i++) {
-    date = localDate.value.getClone();
+    date = selectDate.value.getClone();
     date.setDate(date.getDate() + i);
     dates.push(date);
   }
   return dates;
 });
+/** Роутер */
+const router = useRouter();
+/** Выбор даты и переход к дню */
+const setSelectDateAndPushToDay = (date: Date) => {
+  selectDate.value = date.getClone();
+  router.push({
+    name: DAYS,
+    params: {
+      count: 1,
+      year: selectDate.value.getFullYear(),
+      month: selectDate.value.getMonth() + 1,
+      date: selectDate.value.getDate(),
+    },
+  });
+};
 
 const tasks: {
   columnIndex: number;
@@ -113,7 +141,7 @@ document.addEventListener('mouseup', stop);
     </template>
     <!-- Колонки -->
     <template #default="{ date, index }">
-      <nc-column :date="date" :status="getStatusByDate(date)">
+      <nc-column :date="date" :status="getStatusByDate(date, selectDate)">
         <template #head="{ status }">
           <nc-cell
             class="cell head bg-1 ai-c jc-c fd-col rg-2 p-3"
@@ -123,7 +151,7 @@ document.addEventListener('mouseup', stop);
               {{ date.getShortDayName() }}
             </span>
             <nc-button
-              @click="calendarStore.setSelectDate(date)"
+              @click="setSelectDateAndPushToDay(date)"
               border
               class="date-n-btn p-2"
               :status="status"

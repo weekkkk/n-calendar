@@ -11,15 +11,29 @@ import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 /** Текущий роут */
 const route = useRoute();
-/** Текущий год */
-const calendarStore = useCalendarStore();
+/** Данные роута */
+const routeParams: {
+  count: number;
+  year: number;
+  month: number;
+  date: number;
+} = {
+  count: Number(route.params.count),
+  year: Number(route.params.year),
+  month: Number(route.params.month),
+  date: Number(route.params.date),
+};
 /** Кол-во видимых дат */
-const count = Number(route.params.count);
+const count = Number(routeParams.count);
+/** Выбранная дата */
+const selectDate = ref(
+  new Date(routeParams.year, routeParams.month - 1, routeParams.date)
+);
 /** Видимые в таблице даты */
 const dates = computed(() => {
-  if (count == 6) return calendarStore.selectDate.getMonthDates();
+  if (count == 6) return selectDate.value.getMonthDates();
   let dates: Date[] = [];
-  const date = calendarStore.selectDate.getClone();
+  const date = selectDate.value.getClone();
   for (let i = 0; i < count; i++) {
     date.setDate(date.getDate() + i * 7);
     dates = dates.concat(date.getWeekDates());
@@ -30,8 +44,16 @@ const dates = computed(() => {
 const router = useRouter();
 /** Выбор даты и переход к дню */
 const setSelectDateAndPushToDay = (date: Date) => {
-  calendarStore.setSelectDate(date);
-  router.push({ name: DAYS, params: { count: 1 } });
+  selectDate.value = date.getClone();
+  router.push({
+    name: DAYS,
+    params: {
+      count: 1,
+      year: selectDate.value.getFullYear(),
+      month: selectDate.value.getMonth() + 1,
+      date: selectDate.value.getDate(),
+    },
+  });
 };
 </script>
 
@@ -40,7 +62,7 @@ const setSelectDateAndPushToDay = (date: Date) => {
     <template #default="{ date }">
       <nc-cell
         class="cell head bg-1 ai-c jc-c fd-col rg-2 p-3"
-        :status="getStatusByDate(date)"
+        :status="getStatusByDate(date, selectDate)"
       >
         <span class="fw-medium lh-compact">
           {{ date.getShortDayName() }}
@@ -49,7 +71,7 @@ const setSelectDateAndPushToDay = (date: Date) => {
           @click="setSelectDateAndPushToDay(date)"
           border
           class="date-n-btn p-2"
-          :status="getStatusByDate(date)"
+          :status="getStatusByDate(date, selectDate)"
         >
           <h3 class="fw-medium">{{ date.getDate() }}</h3>
         </nc-button>
