@@ -25,38 +25,38 @@ const props = defineProps({
 /** События */
 const emit = defineEmits(['update:start', 'update:end']);
 
-const startY = ref(0);
-const isDrag = ref(false);
-const startValue = ref(0);
-const curType = ref<'start' | 'end'>('start');
-const startDrag = (e: MouseEvent, type: 'start' | 'end') => {
-  isDrag.value = true;
-  startY.value = e.pageY;
-  curType.value = type;
-  startValue.value = props[type];
-};
-const drag = (e: MouseEvent) => {
-  if (!isDrag.value) return;
-  const dy = e.pageY - startY.value;
-  const dh = Math.round(dy / 72 / 0.25) * 0.25;
-  if (dh >= 0) {
-    emit(
-      `update:${curType.value}`,
-      startValue.value + Math.round(dy / 72 / 0.25) * 0.25
-    );
-  }
-  if (dh <= 0) {
-    emit(
-      `update:${curType.value}`,
-      startValue.value + Math.round(dy / 72 / 0.25) * 0.25
-    );
-  }
-};
-const stop = () => {
-  isDrag.value = false;
-};
-window.addEventListener('mousemove', drag);
-window.addEventListener('mouseup', stop);
+// const startY = ref(0);
+// const isDrag = ref(false);
+// const startValue = ref(0);
+// const curType = ref<'start' | 'end'>('start');
+// const startDrag = (e: MouseEvent, type: 'start' | 'end') => {
+//   isDrag.value = true;
+//   startY.value = e.pageY;
+//   curType.value = type;
+//   startValue.value = props[type];
+// };
+// const drag = (e: MouseEvent) => {
+//   if (!isDrag.value) return;
+//   const dy = e.pageY - startY.value;
+//   const dh = Math.round(dy / 72 / 0.25) * 0.25;
+//   if (dh >= 0) {
+//     emit(
+//       `update:${curType.value}`,
+//       startValue.value + Math.round(dy / 72 / 0.25) * 0.25
+//     );
+//   }
+//   if (dh <= 0) {
+//     emit(
+//       `update:${curType.value}`,
+//       startValue.value + Math.round(dy / 72 / 0.25) * 0.25
+//     );
+//   }
+// };
+// const stop = () => {
+//   isDrag.value = false;
+// };
+// window.addEventListener('mousemove', drag);
+// window.addEventListener('mouseup', stop);
 </script>
 
 <template>
@@ -64,9 +64,9 @@ window.addEventListener('mouseup', stop);
     class="nc-task c-bg-1"
     :style="{ background: `rgba(${getColorByStatus(status)}, 0.8)` }"
   >
-    <div class="top" @mousedown="startDrag($event, 'start')" />
+    <!-- <div class="top" @mousedown="startDrag($event, 'start')" /> -->
     <slot />
-    <div class="bottom" @mousedown="startDrag($event, 'end')" />
+    <!-- <div class="bottom" @mousedown="startDrag($event, 'end')" /> -->
   </div>
 </template>
 

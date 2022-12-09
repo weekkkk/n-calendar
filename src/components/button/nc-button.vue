@@ -34,7 +34,6 @@ const props = defineProps({
   border: none;
   cursor: pointer;
   outline: none;
-  // transition: var(--nc-button-transition);
 
   &.is-border {
     color: rgb(var(--nc-button-c));
@@ -56,6 +55,10 @@ const props = defineProps({
         border: none;
       }
     }
+  }
+  &:not(.is-border) {
+    background-color: rgb(var(--nc-button-c));
+    color: rgb(var(--nc-c-bg-1));
   }
 
   &:hover {
