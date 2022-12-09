@@ -16,22 +16,31 @@ const props = defineProps({
 
 <template>
   <div class="nc-table">
-    <slot name="hours" />
-    <slot v-for="date in dates" :date="date" />
+    <div class="table">
+      <slot name="tasks" />
+      <slot name="hours" />
+      <slot v-for="(date, index) in dates" :date="date" :index="index" />
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .nc-table {
-  display: grid;
-  // grid-auto-flow: column;
   overflow: auto;
-  height: fit-content;
+  user-select: none;
   height: 100%;
-  max-height: 100%;
-  grid-template-columns: v-bind(columns);
-  &::-webkit-scrollbar {
-    width: 0;
+  width: 100%;
+  .table {
+    position: relative;
+    display: grid;
+    height: fit-content;
+    width: fit-content;
+    gap: inherit;
+    min-width: 100%;
+    grid-template-columns: v-bind(columns);
+    &::-webkit-scrollbar {
+      width: 0;
+    }
   }
 }
 </style>
