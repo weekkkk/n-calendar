@@ -6,6 +6,7 @@ import ncCell from '@/components/cell/nc-cell.vue';
 import ncColumn from '@/components/column/nc-column.vue';
 import ncTable from '@/components/table/nc-table.vue';
 import ncTask from '@/components/task/nc-task.vue';
+import ncPopover from '@/components/popover/nc-popover.vue';
 import { StatusEnum } from '@/enums';
 import { HourIntervalModel } from '@/models';
 import { computed, ref, reactive, onMounted, watch } from 'vue';
@@ -13,11 +14,6 @@ import { onBeforeRouteUpdate, useRoute, useRouter } from 'vue-router';
 import { useCalendarStore } from '@/stores/calendar';
 import { getStatusByDate } from '@/methods';
 import { DAYS } from '@/router/names';
-
-console.log('setup');
-onMounted(() => {
-  console.log('mounted');
-});
 
 /** Интервал видимых часов */
 const interval = new HourIntervalModel();
@@ -85,7 +81,14 @@ const startTask = ref({
   end: 0,
 });
 const isDrag = ref(false);
-const start = (e: MouseEvent, columnIndex: number, hour: number) => {
+const start = (e: MouseEvent) => {
+  const $t = e.target as HTMLElement;
+  let id = $t.id;
+  if (!id.includes('cell-')) return;
+  const data = id.slice('cell-'.length).split('_');
+  const columnIndex = Number(data[0]);
+  const hour = Number(data[1]);
+  console.log({ columnIndex, hour });
   const min = Math.round(e.offsetY / 72 / 0.25) * 0.25;
   startY.value = e.pageY;
   isDrag.value = true;
@@ -108,39 +111,21 @@ const drag = (e: MouseEvent) => {
     tasks[tasks.length - 1].end = startTask.value.end;
   }
 };
+document.addEventListener('mousemove', drag);
 const stop = () => {
   isDrag.value = false;
 };
-document.addEventListener('mousemove', drag);
 document.addEventListener('mouseup', stop);
-
-const mousedown = (e: MouseEvent) => {
-  const $t = e.target as HTMLElement;
-  let id = $t.id;
-  if (!id.includes('cell-')) return;
-  const data = id.slice('cell-'.length).split('_');
-  const columnIndex = Number(data[0]);
-  const hour = Number(data[1]);
-  console.log({ columnIndex, hour });
-  const min = Math.round(e.offsetY / 72 / 0.25) * 0.25;
-  startY.value = e.pageY;
-  isDrag.value = true;
-  const task = { columnIndex, start: hour + min, end: hour + min };
-  startTask.value = Object.assign({}, task);
-  tasks.push(task);
-};
 </script>
 
 <template>
-  {{ route.params }}
   <nc-table
     :dates="dates"
     :columns="`var(--nc-cell-head-w) repeat(${count}, 1fr)`"
     class="cg-3"
-    @mousedown="mousedown"
+    @mousedown="start"
   >
     <template #tasks>
-      <!-- :key="`${task.start} - ${task.end}`" -->
       <nc-task
         v-for="task in tasks"
         v-model:start="task.start"
