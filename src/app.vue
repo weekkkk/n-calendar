@@ -1,6 +1,8 @@
 <!-- @format -->
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+// import ncLogo from '@/components/logo/nc-logo.vue';
+</script>
 
 <template>
   <RouterView />
