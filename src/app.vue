@@ -21,6 +21,5 @@ html {
   min-height: 100vh;
   height: 100vh;
   background-color: var(--nc-c-bg-1-100);
-  padding: 32px;
 }
 </style>
