@@ -165,7 +165,7 @@ document.addEventListener('mouseup', stop);
             <nc-button
               @click="setSelectDateAndPushToDay(date)"
               class="date-n-btn p-2"
-              :border="status != StatusEnum.Focus"
+              :border="status != StatusEnum.Brand"
               :status="status"
             >
               <h3 class="fw-medium">{{ date.getDate() }}</h3>

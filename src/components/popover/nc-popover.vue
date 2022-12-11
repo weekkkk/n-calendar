@@ -5,6 +5,7 @@ import { StatusEnum } from '@/enums';
 import type { PropType } from 'vue';
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { PopoverPositionEnum } from './enums';
+import { getColorByStatus } from '@/methods';
 /** Свойства */
 const props = defineProps({
   ref: { type: String },
@@ -16,7 +17,7 @@ const props = defineProps({
   /** Статус поповера */
   status: {
     type: Number as PropType<StatusEnum>,
-    default: StatusEnum.Secondary,
+    default: StatusEnum.Default,
   },
   /** Ширина поповера */
   width: { type: String, default: '100%' },
@@ -309,13 +310,21 @@ defineExpose({
           v-if="visible"
           class="nc-popover"
           :class="[{ 'is-open': visible }, `is-${position}`, classes]"
-          :style="[style]"
+          :style="[
+            style,
+            {
+              '--nc-popover-b-sh-c': `rgba(${getColorByStatus(
+                props.status
+              )}, 0.5)`,
+            },
+          ]"
           ref="$box"
         >
           <div
             class="content"
             :style="{
               width: getWidth(width),
+              background: `rgb(${getColorByStatus(props.status)}`,
             }"
           >
             <slot name="content" />
@@ -328,6 +337,9 @@ defineExpose({
         v-if="visible"
         class="triangle"
         :class="[`is-${position}`]"
+        :style="{
+          borderTopColor: `rgb(${getColorByStatus(props.status)}`,
+        }"
         ref="$tri"
       />
     </Transition>
@@ -375,13 +387,19 @@ defineExpose({
       var(--nc-popover-triangle-size) * 2 + var(--nc-popover-content-br) * 2
     );
     max-width: 100%;
-    border-radius: var(--nc-popover-content-br);
-    padding: var(--nc-popover-py) var(--nc-popover-px);
-    align-items: var(--nc-popover-align);
     overflow: hidden;
     max-width: 100%;
-    color: white;
-    background-color: black;
+    background-color: rgb(var(--nc-c-bg-1));
+  }
+  &::before {
+    content: '';
+    box-shadow: var(--nc-popover-b-sh) var(--nc-popover-b-sh-c);
+    filter: brightness(50%);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
   }
 }
 .nc-popover-el {
@@ -391,7 +409,7 @@ defineExpose({
     position: absolute;
     display: inline-flex;
     border: var(--nc-popover-triangle-size) solid transparent; /* Прозрачные границы */
-    border-top: var(--nc-popover-triangle-size) solid black; /* Добавляем треугольник */
+    border-top: var(--nc-popover-triangle-size) solid rgb(var(--nc-popover-c)); /* Добавляем треугольник */
     z-index: 10001;
     &.is-top,
     &.is-bottom {

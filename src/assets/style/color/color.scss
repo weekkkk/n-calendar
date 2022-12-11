@@ -3,8 +3,8 @@
 :root {
 
     // COLOR
-    .c-focus {
-        color: rgba(var(--nc-c-focus), var(--nc-c-alpha));
+    .c-brand {
+        color: rgba(var(--nc-c-brand), var(--nc-c-alpha));
     }
 
     .c-succes {
@@ -45,11 +45,11 @@
 
     // BACKGROUND
     .bg-brand {
-        background-color: rgba(var(--nc-c-focus), var(--nc-c-alpha));
+        background-color: rgba(var(--nc-c-brand), var(--nc-c-alpha));
     }
 
     .bg-success {
-        background-color: rgba(var(--nc-c-succes), var(--nc-c-alpha));
+        background-color: rgba(var(--nc-c-success), var(--nc-c-alpha));
     }
 
     .bg-warning {
@@ -64,7 +64,7 @@
         background-color: rgba(var(--nc-c-base), var(--nc-c-alpha));
     }
 
-    .bg-info {
+    .bg-secondary {
         background-color: rgba(var(--nc-c-secondary), var(--nc-c-alpha));
     }
 

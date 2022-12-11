@@ -1,3 +1,8 @@
+/** @format */
+
 :root {
+  --nc-popover-c: var(--nc-c-bg-1);
+  --nc-popover-b-sh-c: rgb(var(--nc-c-secondary));
+  --nc-popover-b-sh: 0 0 16px 0;
   --nc-popover-triangle-size: 10px;
 }

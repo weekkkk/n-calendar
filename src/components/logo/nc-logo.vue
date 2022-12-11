@@ -16,15 +16,14 @@ const props = defineProps({
     <span />
     <span />
     <span />
-    <span class="text"> NC </span>
+    <span class="text">
+      <slot />
+    </span>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .nc-logo {
-  position: absolute;
-  left: 50%;
-  top: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -83,14 +82,14 @@ const props = defineProps({
   span {
     position: absolute;
     &.text {
-      font-size: calc(var(--nc-logo-size) * 0.32);
+      font-size: calc(var(--nc-logo-size) * 0.4);
       line-height: 1;
       font-weight: 600;
     }
   }
   @keyframes line {
     50% {
-      scale: 0.5;
+      scale: 0.75;
     }
     to {
       rotate: 360deg;

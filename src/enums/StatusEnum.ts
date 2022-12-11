@@ -3,7 +3,7 @@
 /** Статус ячейки, поля и т.п. */
 enum StatusEnum {
   /** Фокус */
-  Focus = 0,
+  Brand = 0,
   /** Успех */
   Success = 1,
   /** Предупреждение */
@@ -14,5 +14,7 @@ enum StatusEnum {
   Base = 4,
   /** Вторичный */
   Secondary = 5,
+  /** Обычный */
+  Default = 6,
 }
 export default StatusEnum;

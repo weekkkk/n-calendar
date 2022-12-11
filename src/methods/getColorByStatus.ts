@@ -9,14 +9,16 @@ const getColorByStatus = (status: StatusEnum) => {
       return 'var(--nc-c-base)';
     case StatusEnum.Danger:
       return 'var(--nc-c-danger)';
-    case StatusEnum.Focus:
-      return 'var(--nc-c-focus)';
+    case StatusEnum.Brand:
+      return 'var(--nc-c-brand)';
     case StatusEnum.Secondary:
       return 'var(--nc-c-secondary)';
     case StatusEnum.Success:
       return 'var(--nc-c-success)';
     case StatusEnum.Warning:
       return 'var(--nc-c-warning)';
+    case StatusEnum.Default:
+      return 'var(--nc-c-default)';
   }
 };
 export default getColorByStatus;
