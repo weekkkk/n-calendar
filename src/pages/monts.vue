@@ -3,6 +3,7 @@
 <script lang="ts" setup>
 import ncButton from '@/components/button/nc-button.vue';
 import ncTable from '@/components/table/nc-table.vue';
+import { StatusEnum } from '@/enums';
 import { getStatusByDate } from '@/methods';
 import { DAYS } from '@/router/names';
 import { ref, computed } from 'vue';
@@ -67,9 +68,9 @@ const setSelectDateAndPushToDay = (date: Date) => {
 </script>
 
 <template>
-  <nc-table class="months-table g-3" :dates="dates" columns="repeat(3, 1fr)">
+  <nc-table class="months-table g-3 p-3" :dates="dates" columns="repeat(3, 1fr)">
     <template #default="{ date }">
-      <div class="month-wrap">
+      <div class="month-wrap f fd-col rg-1">
         {{ date.getMonthName() }}
         <nc-table
           class="month-table g-1"
@@ -78,12 +79,12 @@ const setSelectDateAndPushToDay = (date: Date) => {
         >
           <template #default="slotData">
             <nc-button
-              class="month-date-n-btn"
+              class="month-date-n-btn "
               @click="setSelectDateAndPushToDay(slotData.date)"
-              border
+              :border="getStatusByDate(slotData.date, selectDate) == StatusEnum.Base"
               :status="getStatusByDate(slotData.date, selectDate)"
             >
-              <span class="f ai-c jc-c">
+              <span class="f ai-c jc-c fw-medium">
                 {{ slotData.date.getDate() }}
               </span>
             </nc-button>
@@ -105,6 +106,7 @@ const setSelectDateAndPushToDay = (date: Date) => {
       .month-date-n-btn {
         position: relative;
         padding-bottom: 100%;
+        border-radius: 50%;
         > span {
           position: absolute;
           left: 0;

@@ -28,8 +28,8 @@ const props = defineProps({
   align-items: center;
   justify-content: center;
   position: relative;
-  width: var(--nc-logo-size);
-  height: var(--nc-logo-size);
+  min-width: var(--nc-logo-size);
+  min-height: var(--nc-logo-size);
   border-radius: 16%;
   overflow: hidden;
   span:nth-child(1),

@@ -17,9 +17,9 @@ const emit = defineEmits(['update:modelValue']);
 </script>
 
 <template>
-  <span class="nc-input fw-medium fs-p lh-regular">
+  <span class="nc-input fw-medium fs-p lh-regular br-1">
     <input
-      class="px-3 py-1"
+      class="px-3 py-2"
       type="text"
       :placeholder="placeholder"
       :readonly="readonly"
@@ -44,6 +44,7 @@ const emit = defineEmits(['update:modelValue']);
     border-style: var(--nc-input-bs);
     border-width: var(--nc-input-bw);
     border-color: var(--nc-input-bc);
+    border-radius: inherit;
   }
   input {
     border: none;
@@ -52,6 +53,7 @@ const emit = defineEmits(['update:modelValue']);
     font-weight: inherit;
     font-size: inherit;
     line-height: inherit;
+    border-radius: inherit;
     background: none;
     z-index: 1;
     &::placeholder {

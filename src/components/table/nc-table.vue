@@ -17,9 +17,9 @@ const props = defineProps({
 <template>
   <div class="nc-table">
     <div class="table">
-      <slot name="tasks" />
       <slot name="hours" />
       <slot v-for="(date, index) in dates" :date="date" :index="index" />
+      <slot name="tasks" />
     </div>
   </div>
 </template>
@@ -30,6 +30,7 @@ const props = defineProps({
   user-select: none;
   height: 100%;
   width: 100%;
+  scroll-padding-top: 100px;
   .table {
     position: relative;
     display: grid;
@@ -38,6 +39,7 @@ const props = defineProps({
     gap: inherit;
     min-width: 100%;
     grid-template-columns: v-bind(columns);
+    grid-auto-rows: inherit;
     &::-webkit-scrollbar {
       width: 0;
     }

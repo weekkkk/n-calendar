@@ -34,15 +34,16 @@ const countRows = computed(() => props.interval.Hours.length)
 
 <style lang="scss" scoped>
 .nc-column {
+  position: relative;
   display: inline-grid;
   grid-template-rows: var(--nc-cell-head-h) repeat(
       v-bind(countRows),
-      minmax(var(--nc-cell-h), 1fr)
+      var(--nc-cell-h)
     );
   &.head {
     position: sticky;
     left: 0;
-    z-index: 1;
+    z-index: 2;
   }
   > .cell {
     display: inline-grid;
@@ -50,6 +51,7 @@ const countRows = computed(() => props.interval.Hours.length)
     &.head {
       position: sticky;
       top: 0;
+      z-index: 1;
     }
   }
   &:not(.head) {

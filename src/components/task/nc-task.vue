@@ -81,6 +81,7 @@ const emit = defineEmits(['update:start', 'update:end']);
   width: calc((100% - var(--nc-cell-head-w)) / v-bind(countColumns) - 16px);
   top: calc(var(--nc-cell-head-h) + var(--nc-cell-h) * v-bind(start));
   bottom: calc(var(--nc-cell-h) * (24 - v-bind(end)));
+  z-index: 0;
   // transition-duration: 0.1s;
   // transition-timing-function: ease-in-out;
   .top,

@@ -5,40 +5,70 @@ import ncLogo from '@/components/logo/nc-logo.vue';
 import ncSelect from '@/components/select/nc-select.vue';
 import ncOption from '@/components/option/nc-option.vue';
 import ncInput from '@/components/input/nc-input.vue';
-import { ref, computed } from 'vue';
+import { ref, computed, reactive } from 'vue';
 import { OptionModel } from '@/components/option/models';
+import { StatusEnum, ViewEnum } from '@/enums';
+import { DAYS, MONTHS, WEEKS } from '@/router/names';
+import { useRoute, useRouter } from 'vue-router';
 
-const options = [
+const viewTypeOptions = reactive([
   new OptionModel({
-    Id: 0,
-    Title: 'Option 1',
-    Value: '1',
+    Id: ViewEnum.Day,
+    Title: 'День',
+    Value: JSON.stringify({ name: DAYS, params: { count: 1 } }),
   }),
   new OptionModel({
-    Id: 1,
-    Title: 'Option 2',
-    Value: '2',
+    Id: ViewEnum.Week,
+    Title: 'Неделя',
+    Value: JSON.stringify({ name: DAYS, params: { count: 7 } }),
   }),
   new OptionModel({
-    Id: 2,
-    Title: 'Option 3',
-    Value: '3',
+    Id: ViewEnum.Month,
+    Title: 'Месяц',
+    Value: JSON.stringify({ name: WEEKS, params: { count: 6 } }),
   }),
   new OptionModel({
-    Id: 3,
-    Title: 'Option 4',
-    Value: '4',
+    Id: ViewEnum.Year,
+    Title: 'Год',
+    Value: JSON.stringify({ name: MONTHS, params: { count: 12 } }),
   }),
-];
-const value = ref<OptionModel | undefined>();
-const str = computed(() => {
-  if (!value.value) return '';
-  return `${value.value.Title} ${value.value.Value}`;
+]);
+const findViewType = (view: ViewEnum) => {
+  return viewTypeOptions.find((el) => el.Id == view);
+};
+const route = useRoute();
+const router = useRouter();
+const viewType = computed({
+  get: (): OptionModel | undefined => {
+    switch (route.name) {
+      case DAYS:
+        switch (Number(route.params.count)) {
+          case 1:
+            return findViewType(ViewEnum.Day);
+          case 7:
+            return findViewType(ViewEnum.Week);
+        }
+      case WEEKS:
+        switch (Number(route.params.count)) {
+          case 6:
+            return findViewType(ViewEnum.Month);
+        }
+      case MONTHS:
+        switch (Number(route.params.count)) {
+          case 12:
+            return findViewType(ViewEnum.Year);
+        }
+    }
+  },
+  set: (option: OptionModel | undefined) => {
+    if (!option) return;
+    router.push(JSON.parse(option.Value));
+  },
 });
 </script>
 
 <template>
-  <header class="f ai-c px-3">
+  <header class="f ai-c cg-3 px-3">
     <section class="f ai-c cg-2">
       <nc-logo play>
         {{ new Date().getDate() }}
@@ -48,17 +78,14 @@ const str = computed(() => {
     <section class="w-100"></section>
     <section>
       <nc-select
-        v-model="value"
-        :value="str"
-        :options="options"
-        placeholder="Placeholder"
-        width="264px"
+        v-model="viewType"
+        :value="viewType?.Title"
+        :options="viewTypeOptions"
       >
         <template #default="{ option }">
           {{ option?.Title }}
         </template>
       </nc-select>
-      <nc-input />
     </section>
   </header>
   <body class="container f">
@@ -76,17 +103,22 @@ const str = computed(() => {
   flex-direction: column;
 }
 header {
-  height: 64px;
+  height: 80px;
+  border-bottom: 1px solid rgb(var(--nc-c-secondary));
+  section:first-child {
+    white-space: nowrap;
+  }
 }
 body.container {
   height: calc(100% - 64px);
   aside {
-    background-color: brown;
     &:first-child {
       width: 244px;
+      border-right: 1px solid rgb(var(--nc-c-secondary));
     }
     &:last-child {
       width: 48px;
+      border-left: 1px solid rgb(var(--nc-c-secondary));
     }
   }
   main {

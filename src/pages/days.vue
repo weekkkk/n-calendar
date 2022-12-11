@@ -89,7 +89,7 @@ const start = (e: MouseEvent) => {
   const columnIndex = Number(data[0]);
   const hour = Number(data[1]);
   console.log({ columnIndex, hour });
-  const min = Math.round(e.offsetY / 72 / 0.25) * 0.25;
+  const min = Math.round(e.offsetY / 80 / 0.25) * 0.25;
   startY.value = e.pageY;
   isDrag.value = true;
   const task = { columnIndex, start: hour + min, end: hour + min };
@@ -99,15 +99,15 @@ const start = (e: MouseEvent) => {
 const drag = (e: MouseEvent) => {
   if (!isDrag.value) return;
   const dy = e.pageY - startY.value;
-  const dh = Math.round(dy / 72 / 0.25) * 0.25;
+  const dh = Math.round(dy / 80 / 0.25) * 0.25;
   if (dh >= 0) {
     tasks[tasks.length - 1].start = startTask.value.start;
     tasks[tasks.length - 1].end =
-      startTask.value.end + Math.round(dy / 72 / 0.25) * 0.25;
+      startTask.value.end + Math.round(dy / 80 / 0.25) * 0.25;
   }
   if (dh <= 0) {
     tasks[tasks.length - 1].start =
-      startTask.value.start + Math.round(dy / 72 / 0.25) * 0.25;
+      startTask.value.start + Math.round(dy / 80 / 0.25) * 0.25;
     tasks[tasks.length - 1].end = startTask.value.end;
   }
 };
@@ -122,28 +122,16 @@ document.addEventListener('mouseup', stop);
   <nc-table
     :dates="dates"
     :columns="`var(--nc-cell-head-w) repeat(${count}, 1fr)`"
-    class="cg-3"
     @mousedown="start"
   >
-    <template #tasks>
-      <nc-task
-        v-for="task in tasks"
-        v-model:start="task.start"
-        v-model:end="task.end"
-        :column-index="task.columnIndex"
-        :count-columns="count"
-      >
-        Test name
-      </nc-task>
-    </template>
     <!-- Колка-заголовок -->
     <template #hours>
       <nc-column class="head">
         <template #head>
-          <div class="bg-1" />
+          <div class="f ai-c jc-c bg-1" />
         </template>
         <div
-          class="cell f ai-c jc-fe bg-1 p-3 c-secondary"
+          class="cell f ai-c jc-fe bg-1 p-3 c-secondary fw-medium fs-p"
           v-for="hour in interval.Hours"
           :key="hour"
         >
@@ -156,7 +144,7 @@ document.addEventListener('mouseup', stop);
       <nc-column :date="date" :status="getStatusByDate(date, selectDate)">
         <template #head="{ status }">
           <nc-cell
-            class="cell head bg-1 ai-c jc-c fd-col rg-2 p-3"
+            class="cell head bg-1 ai-c jc-sb fd-col p-3"
             :status="status"
           >
             <span class="fw-medium lh-compact">
@@ -164,11 +152,11 @@ document.addEventListener('mouseup', stop);
             </span>
             <nc-button
               @click="setSelectDateAndPushToDay(date)"
-              class="date-n-btn p-2"
-              :border="status != StatusEnum.Brand"
+              class="date-n-btn p-2 br-4"
+              :border="status == StatusEnum.Base"
               :status="status"
             >
-              <h3 class="fw-medium">{{ date.getDate() }}</h3>
+              <h4 class="fw-medium">{{ date.getDate() }}</h4>
             </nc-button>
           </nc-cell>
         </template>
@@ -179,6 +167,18 @@ document.addEventListener('mouseup', stop);
           :id="`cell-${index}_${hour}`"
         />
       </nc-column>
+    </template>
+    <!-- Задачи -->
+    <template #tasks>
+      <nc-task
+        v-for="task in tasks"
+        v-model:start="task.start"
+        v-model:end="task.end"
+        :column-index="task.columnIndex"
+        :count-columns="count"
+      >
+        Test name
+      </nc-task>
     </template>
   </nc-table>
 </template>

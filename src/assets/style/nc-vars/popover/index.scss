@@ -3,6 +3,7 @@
 :root {
   --nc-popover-c: var(--nc-c-bg-1);
   --nc-popover-b-sh-c: rgb(var(--nc-c-secondary));
-  --nc-popover-b-sh: 0 0 16px 0;
+  --nc-popover-b-sh: 0 0 8px 0;
   --nc-popover-triangle-size: 10px;
+  --nc-popover-content-br: var(--nc-indent-1);
 }

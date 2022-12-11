@@ -24,4 +24,38 @@ html {
   height: 100vh;
   background-color: var(--nc-c-bg-1-100);
 }
+
+/* полоса прокрутки (скроллбар) */
+::-webkit-scrollbar {
+  width: 16px; /* ширина для вертикального скролла */
+  height: 16px; /* высота для горизонтального скролла */
+  background-color: rgb(var(--nc-c-bg-1));
+  border-radius: 8px;
+}
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--nc-c-secondary), 0.6);
+  border-radius: 8px;
+  border: 4px solid rgb(var(--nc-c-bg-1));
+  cursor: pointer;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(var(--nc-c-secondary), 0.8);
+}
+::-webkit-scrollbar-thumb:active {
+  background-color: rgba(var(--nc-c-secondary), 1);
+}
+/* Стрелки */
+::-webkit-scrollbar-button:vertical:start:decrement {
+  display: none;
+}
+::-webkit-scrollbar-button:vertical:end:increment {
+  display: none;
+}
+::-webkit-scrollbar-button:horizontal:start:decrement {
+  display: none;
+}
+::-webkit-scrollbar-button:horizontal:end:increment {
+  display: none;
+}
 </style>

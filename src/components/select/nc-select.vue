@@ -48,7 +48,7 @@ const focus = ref(false);
       <ul class="f fd-col">
         <slot />
         <nc-option
-          class="px-3 py-1 fw-medium fs-p lh-regular"
+          class="px-3 py-2 fw-medium fs-p lh-regular"
           v-for="option in options"
           :key="option.Id"
           :model-value="modelValue?.Value"

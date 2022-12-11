@@ -321,7 +321,7 @@ defineExpose({
           ref="$box"
         >
           <div
-            class="content"
+            class="content py-1"
             :style="{
               width: getWidth(width),
               background: `rgb(${getColorByStatus(props.status)}`,
@@ -390,16 +390,20 @@ defineExpose({
     overflow: hidden;
     max-width: 100%;
     background-color: rgb(var(--nc-c-bg-1));
+    // border-radius: inherit;
+    border-radius: var(--nc-popover-content-br);
   }
   &::before {
     content: '';
     box-shadow: var(--nc-popover-b-sh) var(--nc-popover-b-sh-c);
-    filter: brightness(50%);
+    filter: brightness(10%);
     position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
+    // border-radius: inherit;
+    border-radius: var(--nc-popover-content-br);
   }
 }
 .nc-popover-el {

@@ -4,6 +4,7 @@
 import ncButton from '@/components/button/nc-button.vue';
 import ncCell from '@/components/cell/nc-cell.vue';
 import ncTable from '@/components/table/nc-table.vue';
+import { StatusEnum } from '@/enums';
 import { getStatusByDate } from '@/methods';
 import { DAYS } from '@/router/names';
 import { useCalendarStore } from '@/stores/calendar';
@@ -58,23 +59,25 @@ const setSelectDateAndPushToDay = (date: Date) => {
 </script>
 
 <template>
-  <nc-table class="weeks-table g-3" :dates="dates" columns="repeat(7, 1fr)">
+  <nc-table class="weeks-table" :dates="dates" columns="repeat(7, minmax(164px, 1fr))">
     <template #default="{ date }">
       <nc-cell
-        class="cell head bg-1 ai-c jc-c fd-col rg-2 p-3"
+        class="cell head bg-1 ai-c jc-s fd-col rg-2 p-3"
         :status="getStatusByDate(date, selectDate)"
       >
-        <span class="fw-medium lh-compact">
-          {{ date.getShortDayName() }}
-        </span>
-        <nc-button
-          @click="setSelectDateAndPushToDay(date)"
-          border
-          class="date-n-btn p-2"
-          :status="getStatusByDate(date, selectDate)"
-        >
-          <h3 class="fw-medium">{{ date.getDate() }}</h3>
-        </nc-button>
+        <template #default="{ status }">
+          <span class="fw-medium lh-compact">
+            {{ date.getShortDayName() }}
+          </span>
+          <nc-button
+            @click="setSelectDateAndPushToDay(date)"
+            class="date-n-btn p-2 br-4"
+            :border="status == StatusEnum.Base"
+            :status="getStatusByDate(date, selectDate)"
+          >
+            <h4 class="fw-medium">{{ date.getDate() }}</h4>
+          </nc-button>
+        </template>
       </nc-cell>
     </template>
   </nc-table>
@@ -82,7 +85,7 @@ const setSelectDateAndPushToDay = (date: Date) => {
 
 <style lang="scss" scoped>
 .weeks-table {
-  grid-auto-rows: min-content;
+  grid-auto-rows: 164px;
   .date-n-btn {
     width: 48px;
     height: 48px;

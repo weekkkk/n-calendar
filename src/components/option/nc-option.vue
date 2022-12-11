@@ -21,6 +21,7 @@ const emit = defineEmits(['update:modelValue']);
   <label class="nc-option">
     <input
       type="radio"
+      v-model="modelValue"
       :name="name"
       :value="value"
       @change="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
@@ -41,7 +42,7 @@ const emit = defineEmits(['update:modelValue']);
   input {
     display: none;
     &:checked + .background {
-      --nc-c-alpha: 0.6;
+      --nc-c-alpha: 0.3;
       background-color: rgb(var(--nc-c-secondary), var(--nc-c-alpha));
     }
   }
@@ -61,11 +62,11 @@ const emit = defineEmits(['update:modelValue']);
     right: 0;
   }
   &:hover .background {
-    --nc-c-alpha: 0.2;
+    --nc-c-alpha: 0.1;
     background-color: rgb(var(--nc-c-secondary), var(--nc-c-alpha));
   }
   &:active .background {
-    --nc-c-alpha: 0.4;
+    --nc-c-alpha: 0.2;
     background-color: rgb(var(--nc-c-secondary), var(--nc-c-alpha));
   }
 }

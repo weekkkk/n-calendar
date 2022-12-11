@@ -15,7 +15,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <button class="nc-button" :class="{ 'is-border': border }">
+  <button class="nc-button br-1" :class="{ 'is-border': border }">
     <slot />
   </button>
 </template>
