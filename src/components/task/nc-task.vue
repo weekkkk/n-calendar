@@ -4,7 +4,6 @@
 import { StatusEnum } from '@/enums';
 import { getColorByStatus } from '@/methods';
 import type { PropType } from 'vue';
-import { ref } from 'vue';
 
 /** Свойства */
 const props = defineProps({
@@ -24,49 +23,16 @@ const props = defineProps({
 });
 /** События */
 const emit = defineEmits(['update:start', 'update:end']);
-
-// const startY = ref(0);
-// const isDrag = ref(false);
-// const startValue = ref(0);
-// const curType = ref<'start' | 'end'>('start');
-// const startDrag = (e: MouseEvent, type: 'start' | 'end') => {
-//   isDrag.value = true;
-//   startY.value = e.pageY;
-//   curType.value = type;
-//   startValue.value = props[type];
-// };
-// const drag = (e: MouseEvent) => {
-//   if (!isDrag.value) return;
-//   const dy = e.pageY - startY.value;
-//   const dh = Math.round(dy / 72 / 0.25) * 0.25;
-//   if (dh >= 0) {
-//     emit(
-//       `update:${curType.value}`,
-//       startValue.value + Math.round(dy / 72 / 0.25) * 0.25
-//     );
-//   }
-//   if (dh <= 0) {
-//     emit(
-//       `update:${curType.value}`,
-//       startValue.value + Math.round(dy / 72 / 0.25) * 0.25
-//     );
-//   }
-// };
-// const stop = () => {
-//   isDrag.value = false;
-// };
-// window.addEventListener('mousemove', drag);
-// window.addEventListener('mouseup', stop);
 </script>
 
 <template>
   <div
-    class="nc-task c-bg-1"
-    :style="{ background: `rgba(${getColorByStatus(status)}, 0.8)` }"
+    class="nc-task c-bg-1 br-1"
+    :style="{
+      background: `rgb(${getColorByStatus(status)})`,
+    }"
   >
-    <!-- <div class="top" @mousedown="startDrag($event, 'start')" /> -->
     <slot />
-    <!-- <div class="bottom" @mousedown="startDrag($event, 'end')" /> -->
   </div>
 </template>
 
@@ -75,15 +41,16 @@ const emit = defineEmits(['update:start', 'update:end']);
   position: absolute;
   overflow: hidden;
   left: calc(
-    var(--nc-cell-head-w) + 16px + (100% - var(--nc-cell-head-w)) /
+    var(--nc-cell-head-w) + (100% - var(--nc-cell-head-w)) /
       v-bind(countColumns) * v-bind(columnIndex)
   );
   width: calc((100% - var(--nc-cell-head-w)) / v-bind(countColumns) - 16px);
   top: calc(var(--nc-cell-head-h) + var(--nc-cell-h) * v-bind(start));
   bottom: calc(var(--nc-cell-h) * (24 - v-bind(end)));
   z-index: 0;
-  // transition-duration: 0.1s;
-  // transition-timing-function: ease-in-out;
+  display: flex;
+  flex-direction: column;
+  opacity: 0.8;
   .top,
   .bottom {
     content: '';

@@ -36,7 +36,7 @@ html {
 ::-webkit-scrollbar-thumb {
   background-color: rgba(var(--nc-c-secondary), 0.6);
   border-radius: 8px;
-  border: 4px solid rgb(var(--nc-c-bg-1));
+  border: 6px solid rgb(var(--nc-c-bg-1));
   cursor: pointer;
 }
 ::-webkit-scrollbar-thumb:hover {

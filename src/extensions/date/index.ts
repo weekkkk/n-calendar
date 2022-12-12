@@ -9,3 +9,4 @@ import './getShortTimeString';
 import './getCompare';
 import './getShortDate';
 import './getClone';
+import './getDecimalHours';

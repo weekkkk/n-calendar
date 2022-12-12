@@ -110,7 +110,7 @@ header {
   }
 }
 body.container {
-  height: calc(100% - 64px);
+  height: calc(100% - 80px);
   aside {
     &:first-child {
       width: 244px;
