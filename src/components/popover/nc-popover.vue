@@ -295,6 +295,7 @@ defineExpose({
   setElRect,
   setBoxRect,
   setTriRect,
+  setSettings,
 });
 </script>
 
@@ -415,6 +416,7 @@ defineExpose({
     border: var(--nc-popover-triangle-size) solid transparent; /* Прозрачные границы */
     border-top: var(--nc-popover-triangle-size) solid rgb(var(--nc-popover-c)); /* Добавляем треугольник */
     z-index: 10001;
+    opacity: 0;
     &.is-top,
     &.is-bottom {
       left: 50%;
