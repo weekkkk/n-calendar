@@ -1,0 +1,127 @@
+/** @format */
+
+:root {
+
+    // COLOR
+    .c-brand {
+        color: rgba(var(--nc-c-brand), var(--nc-c-alpha));
+    }
+
+    .c-succes {
+        color: rgba(var(--nc-c-succes), var(--nc-c-alpha));
+    }
+
+    .c-warning {
+        color: rgba(var(--nc-c-warning), var(--nc-c-alpha));
+    }
+
+    .c-danger {
+        color: rgba(var(--nc-c-danger), var(--nc-c-alpha));
+    }
+
+    .c-base {
+        color: rgba(var(--nc-c-base), var(--nc-c-alpha));
+    }
+
+    .c-secondary {
+        color: rgba(var(--nc-c-secondary), var(--nc-c-alpha));
+    }
+
+    .c-bg-1 {
+        color: rgba(var(--nc-c-bg-1), var(--nc-c-alpha));
+    }
+
+    .c-bg-2 {
+        color: rgba(var(--nc-c-bg-2), var(--nc-c-alpha));
+    }
+
+    .c-border-1 {
+        color: rgba(var(--nc-c-border-1), var(--nc-c-alpha));
+    }
+
+    .c-border-2 {
+        color: rgba(var(--nc-c-border-2), var(--nc-c-alpha));
+    }
+
+    // BACKGROUND
+    .bg-brand {
+        background-color: rgba(var(--nc-c-brand), var(--nc-c-alpha));
+    }
+
+    .bg-success {
+        background-color: rgba(var(--nc-c-success), var(--nc-c-alpha));
+    }
+
+    .bg-warning {
+        background-color: rgba(var(--nc-c-warning), var(--nc-c-alpha));
+    }
+
+    .bg-danger {
+        background-color: rgba(var(--nc-c-danger), var(--nc-c-alpha));
+    }
+
+    .bg-text {
+        background-color: rgba(var(--nc-c-base), var(--nc-c-alpha));
+    }
+
+    .bg-secondary {
+        background-color: rgba(var(--nc-c-secondary), var(--nc-c-alpha));
+    }
+
+    .bg-1 {
+        background-color: rgba(var(--nc-c-bg-1), var(--nc-c-alpha));
+    }
+
+    .bg-2 {
+        background-color: rgba(var(--nc-c-bg-2), var(--nc-c-alpha));
+    }
+
+    .bg-border-1 {
+        background-color: rgba(var(--nc-c-border-1), var(--nc-c-alpha));
+    }
+
+    .bg-border-2 {
+        background-color: rgba(var(--nc-c-border-2), var(--nc-c-alpha));
+    }
+
+    // TRANSPARENCY
+    .a-10 {
+        --nc-c-alpha: 0.1;
+    }
+
+    .a-20 {
+        --nc-c-alpha: 0.2;
+    }
+
+    .a-30 {
+        --nc-c-alpha: 0.3;
+    }
+
+    .a-40 {
+        --nc-c-alpha: 0.4;
+    }
+
+    .a-50 {
+        --nc-c-alpha: 0.5;
+    }
+
+    .a-60 {
+        --nc-c-alpha: 0.6;
+    }
+
+    .a-70 {
+        --nc-c-alpha: 0.7;
+    }
+
+    .a-80 {
+        --nc-c-aplha: 0.8;
+    }
+
+    .a-90 {
+        --nc-c-aplha: 0.9;
+    }
+
+    .a-100 {
+        --nc-c-aplha: 1;
+    }
+}
