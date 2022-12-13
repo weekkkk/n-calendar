@@ -2,21 +2,13 @@
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
+import App from './App.vue';
 
-/** Шрифт */
-import './assets/font/montserrat/index.scss';
-/** Стили */
-import './assets/style/index.scss';
-/** Расширения классов */
-import './extensions';
+import './assets/fonts/montserrat/index.scss';
+import './assets/styles/index.scss';
 
-import App from './app.vue';
-import router from './router';
-
-const pinia = createPinia();
 const app = createApp(App);
 
-app.use(pinia);
-app.use(router);
+app.use(createPinia());
 
 app.mount('#app');
