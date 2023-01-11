@@ -48,6 +48,7 @@ const emit = defineEmits(['update:modelValue']);
   }
   input {
     border: none;
+    width: 100%;
     outline: none;
     font-family: inherit;
     font-weight: inherit;

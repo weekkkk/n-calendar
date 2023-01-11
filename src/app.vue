@@ -27,16 +27,16 @@ html {
 
 /* полоса прокрутки (скроллбар) */
 ::-webkit-scrollbar {
-  width: 16px; /* ширина для вертикального скролла */
-  height: 16px; /* высота для горизонтального скролла */
+  width: 4px; /* ширина для вертикального скролла */
+  height: 4px; /* высота для горизонтального скролла */
   background-color: rgb(var(--nc-c-bg-1));
-  border-radius: 8px;
+  border-radius: 2px;
 }
 /* ползунок скроллбара */
 ::-webkit-scrollbar-thumb {
   background-color: rgba(var(--nc-c-secondary), 0.6);
-  border-radius: 8px;
-  border: 6px solid rgb(var(--nc-c-bg-1));
+  border-radius: 2px;
+  // border: 4px solid rgb(var(--nc-c-bg-1));
   cursor: pointer;
 }
 ::-webkit-scrollbar-thumb:hover {

@@ -1,20 +1,17 @@
-<!-- @format -->
-
 <script lang="ts" setup>
 import ncPopover from '@/components/popover/nc-popover.vue';
 import ncInput from '@/components/input/nc-input.vue';
-import ncOption from '@/components/option/nc-option.vue';
-import { OptionModel } from '@/components//option/models';
+import ncButton from '@/components/button/nc-button.vue';
 import { PopoverPositionEnum } from '@/components/popover/enums';
-import { StatusEnum } from '@/enums';
 import type { PropType } from 'vue';
 import { ref } from 'vue';
-
+import { StatusEnum } from '@/enums';
+import { getStatusByDate } from '@/methods';
 /** Свойства */
 const props = defineProps({
   /** Значение */
   modelValue: {
-    type: Object as PropType<OptionModel | undefined>,
+    type: Object as PropType<Date | undefined>,
     default: undefined,
   },
   /** Значение записанное в инпут */
@@ -23,8 +20,6 @@ const props = defineProps({
   placeholder: { type: String, default: '' },
   /** Уникальное имя */
   name: { type: String, default: 'nc-select' },
-  /** Опции */
-  options: { type: Array as PropType<OptionModel[]>, default: [] },
 });
 /** События */
 const emit = defineEmits(['update:modelValue']);
@@ -34,50 +29,46 @@ const focus = ref(false);
 
 <template>
   <nc-popover
-    classes="nc-select-options"
+    classes="nc-datepicker"
     :position="PopoverPositionEnum.Bottom"
     @open="focus = true"
     @close="focus = false"
+    width="fit-content"
   >
     <nc-input
       class="w-100"
       :class="{ focus: focus }"
       :placeholder="placeholder"
       readonly
-      :model-value="value || modelValue?.Value"
+      :model-value="value || modelValue?.toString()"
     />
     <template #content>
-      <ul class="f options fd-col">
+      <ul class="dates g-3 p-3">
         <slot />
-        <nc-option
-          class="px-3 py-2 fw-medium fs-p lh-regular"
-          v-for="option in options"
-          :key="option.Id"
-          :model-value="modelValue?.Value"
-          @update:model-value="
-            emit(
-              'update:modelValue',
-              OptionModel.getOptionByKey(options, $event)
-            )
-          "
-          :value="option.Value"
-          :name="name"
+        <nc-button
+          class="date br-3"
+          :status="getStatusByDate(date, modelValue)"
+          :border="getStatusByDate(date, modelValue) == StatusEnum.Base"
+          v-for="date in modelValue?.getMonthDates()"
+          :key="date.toString()"
+          @click="emit('update:modelValue', date)"
         >
-          <slot :option="option" />
-        </nc-option>
+          {{ date.getDate() }}
+        </nc-button>
       </ul>
     </template>
   </nc-popover>
 </template>
 
-<style lang="scss">
-.nc-select-options {
-  .options {
-    max-height: calc(40px * 4);
-    height: 100%;
-    overflow: auto;
-    .nc-option {
-      margin-right: -16px;
+<style lang="scss" scoped>
+.nc-datepicker {
+  .dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    .date {
+      width: 32px;
+      height: 32px;
     }
   }
 }

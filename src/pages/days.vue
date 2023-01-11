@@ -7,6 +7,11 @@ import ncColumn from '@/components/column/nc-column.vue';
 import ncTable from '@/components/table/nc-table.vue';
 import ncTask from '@/components/task/nc-task.vue';
 import ncPopover from '@/components/popover/nc-popover.vue';
+
+import ncInput from '@/components/input/nc-input.vue';
+import ncSelect from '@/components/select/nc-select.vue';
+import ncDatepicker from '@/components/datepicker/nc-datepicker.vue';
+
 import { StatusEnum } from '@/enums';
 import { HourIntervalModel } from '@/models';
 import { computed, ref, reactive, onMounted, watch } from 'vue';
@@ -16,6 +21,7 @@ import { getStatusByDate } from '@/methods';
 import { DAYS } from '@/router/names';
 import { TaskModel } from '@/stores/tasks/models';
 import { PopoverPositionEnum } from '@/components/popover/enums';
+import { OptionModel } from '@/components/option/models';
 
 /** Интервал видимых часов */
 const interval = new HourIntervalModel();
@@ -58,11 +64,11 @@ const dates = computed(() => {
 /** Роутер */
 const router = useRouter();
 /** Выбор даты и переход к дню */
-const setSelectDateAndPushToDay = (date: Date) => {
+const setSelectDate = (date: Date, count: number = 1) => {
   router.push({
     name: DAYS,
     params: {
-      count: 1,
+      count,
       year: date.getFullYear(),
       month: date.getMonth() + 1,
       date: date.getDate(),
@@ -72,8 +78,12 @@ const setSelectDateAndPushToDay = (date: Date) => {
 
 /** Начальная позиция курсора по Y */
 const startY = ref(0);
+/** Дата дня колонки, в которую добавляется задача */
+const columnDate = ref<Date>();
 /** Индекс колонки в которую добавляется задача */
-const columnIndex = ref(0);
+const columnIndex = computed(() => {
+  return dates.value.findIndex((date) => !columnDate.value?.getCompare(date));
+});
 /** Начальный час */
 const startStartHour = ref(0);
 const startHour = ref(0);
@@ -90,7 +100,7 @@ const start = (e: MouseEvent) => {
   let id = $t.id;
   if (!id.includes('cell-')) return;
   const data = id.slice('cell-'.length).split('_');
-  columnIndex.value = Number(data[0]);
+  columnDate.value = dates.value[Number(data[0])];
   startStartHour.value = Number(data[1]);
   startStartHour.value += Math.round(e.offsetY / 80 / 0.25) * 0.25;
   startEndHour.value = startStartHour.value;
@@ -100,7 +110,7 @@ const start = (e: MouseEvent) => {
   const cellOff = Math.round((e.pageY - rect.y) / 80 / 0.25) * (0.25 * 80);
   startY.value = rect.y + cellOff;
   isDrag.value = true;
-  task_popover.value.close();
+  task_popover.value?.close();
 };
 /** Перетаскивать */
 const drag = (e: MouseEvent) => {
@@ -130,13 +140,100 @@ document.addEventListener('mousemove', drag);
 const stop = () => {
   if (!isDrag.value) return;
   isDrag.value = false;
-  setTimeout(task_popover.value.open);
+  if (startHour.value == endHour.value) endHour.value += 0.25;
+  task_popover.value?.open();
 };
 document.addEventListener('mouseup', stop);
 /** Курсор */
 const cursor = computed(() =>
   isDrag.value && startHour.value != endHour.value ? 's-resize' : ''
 );
+
+/**
+ * ! Форма
+ */
+/** Часы */
+const hours = computed(() => {
+  const hours: OptionModel[] = [];
+  for (let i = 0; i < 24; i++)
+    hours.push(
+      new OptionModel({
+        Id: i,
+        Title: i.getString(2),
+        Value: `${i}`,
+      })
+    );
+  return hours;
+});
+const sHours = computed(() => {
+  return hours.value.filter(
+    (hour) => hour.Id + sMinute.value.Id / 60 < endHour.value
+  );
+});
+const eHours = computed(() => {
+  return hours.value.filter(
+    (hour) => hour.Id + eMinute.value.Id / 60 > startHour.value
+  );
+});
+const getHour = (number: number) => {
+  return (
+    hours.value.find((hour) => hour.Id == Math.floor(number)) || hours.value[0]
+  );
+};
+const sHour = computed({
+  get: () => getHour(startHour.value),
+  set: (value: OptionModel) => {
+    startHour.value = value.Id + sMinute.value.Id / 60;
+  },
+});
+const eHour = computed({
+  get: () => getHour(endHour.value),
+  set: (value: OptionModel) => {
+    endHour.value = value.Id + eMinute.value.Id / 60;
+  },
+});
+/** Минуты */
+const minutes = computed(() => {
+  const minutes: OptionModel[] = [];
+  for (let i = 0; i < 60; i += 15)
+    minutes.push(
+      new OptionModel({
+        Id: i,
+        Title: i.getString(2),
+        Value: `${i}`,
+      })
+    );
+  return minutes;
+});
+const sMinutes = computed(() => {
+  return minutes.value.filter(
+    (minute) => sHour.value.Id + minute.Id / 60 < endHour.value
+  );
+});
+const eMinutes = computed(() => {
+  return minutes.value.filter(
+    (minute) => eHour.value.Id + minute.Id / 60 > startHour.value
+  );
+});
+const getMinute = (number: number) => {
+  return (
+    minutes.value.find(
+      (minute) => minute.Id == (number - Math.floor(number)) * 60
+    ) || minutes.value[0]
+  );
+};
+const sMinute = computed({
+  get: () => getMinute(startHour.value),
+  set: (value: OptionModel) => {
+    startHour.value = sHour.value.Id + value.Id / 60;
+  },
+});
+const eMinute = computed({
+  get: () => getMinute(endHour.value),
+  set: (value: OptionModel) => {
+    endHour.value = eHour.value.Id + value.Id / 60;
+  },
+});
 </script>
 
 <template>
@@ -173,7 +270,7 @@ const cursor = computed(() =>
               {{ date.getShortDayName() }}
             </span>
             <nc-button
-              @click="setSelectDateAndPushToDay(date)"
+              @click="setSelectDate(date)"
               class="date-n-btn p-2 br-4"
               :border="status == StatusEnum.Base"
               :status="status"
@@ -203,9 +300,112 @@ const cursor = computed(() =>
           width="304px"
           :position="PopoverPositionEnum.Left"
           ref="task_popover"
+          is-disable-default-events
         >
           <template #content>
-            <h1>Test</h1>
+            <form class="f fd-col rg-3 p-3" @submit.prevent>
+              <h3>Новая задача</h3>
+
+              <section class="f fd-col rg-2">
+                <label class="fs-small_p fw-medium lh-no_lh c-secondary">
+                  Название
+                </label>
+                <nc-input placeholder="Введите название" />
+              </section>
+
+              <section class="f fd-col rg-2">
+                <label class="fs-small_p fw-medium lh-no_lh c-secondary">
+                  Дата
+                </label>
+                <nc-datepicker
+                  :model-value="columnDate"
+                  @update:model-value="
+                    columnDate = $event;
+                    setSelectDate($event, count);
+                  "
+                  :value="columnDate?.toDateString()"
+                  placeholder="Дата"
+                  readonly
+                />
+              </section>
+
+              <section class="f fd-col rg-2">
+                <label class="fs-small_p fw-medium lh-no_lh c-secondary">
+                  Время начала
+                </label>
+                <div class="f ai-c cg-2">
+                  <nc-select
+                    v-model="sHour"
+                    :value="sHour.Title"
+                    :options="sHours"
+                    placeholder="00"
+                    name="start-hour"
+                  >
+                    <template #default="{ option }">
+                      {{ option?.Title }}
+                    </template>
+                  </nc-select>
+                  <h4>:</h4>
+                  <nc-select
+                    v-model="sMinute"
+                    :value="sMinute.Title"
+                    :options="sMinutes"
+                    placeholder="00"
+                    name="start-minute"
+                  >
+                    <template #default="{ option }">
+                      {{ option?.Title }}
+                    </template>
+                  </nc-select>
+                </div>
+              </section>
+
+              <section class="f fd-col rg-2">
+                <label class="fs-small_p fw-medium lh-no_lh c-secondary">
+                  Время конца
+                </label>
+                <div class="f ai-c cg-2">
+                  <nc-select
+                    v-model="eHour"
+                    :value="eHour.Title"
+                    :options="eHours"
+                    placeholder="00"
+                    name="start-hour"
+                  >
+                    <template #default="{ option }">
+                      {{ option?.Title }}
+                    </template>
+                  </nc-select>
+                  <h4>:</h4>
+                  <nc-select
+                    v-model="eMinute"
+                    :value="eMinute.Title"
+                    :options="eMinutes"
+                    placeholder="00"
+                    name="start-minute"
+                  >
+                    <template #default="{ option }">
+                      {{ option?.Title }}
+                    </template>
+                  </nc-select>
+                </div>
+              </section>
+
+              <section class="f cg-3">
+                <nc-button
+                  :status="StatusEnum.Secondary"
+                  class="px-3 py-2 fs-p lh-regular fw-medium w-100"
+                >
+                  Отмена
+                </nc-button>
+                <nc-button
+                  :status="StatusEnum.Brand"
+                  class="px-3 py-2 fs-p lh-regular fw-medium w-100"
+                >
+                  Создать
+                </nc-button>
+              </section>
+            </form>
           </template>
         </nc-popover>
       </nc-task>
