@@ -19,7 +19,9 @@ const props = defineProps({
     <div class="table">
       <slot name="hours" />
       <slot v-for="(date, index) in dates" :date="date" :index="index" />
+      <!-- <span> -->
       <slot name="tasks" />
+      <!-- </span> -->
     </div>
   </div>
 </template>

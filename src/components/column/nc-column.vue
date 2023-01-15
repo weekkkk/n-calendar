@@ -36,6 +36,7 @@ const countRows = computed(() => props.interval.Hours.length)
 .nc-column {
   position: relative;
   display: inline-grid;
+  border-left: 1px solid rgba(114, 106, 184, 0.37);
   grid-template-rows: var(--nc-cell-head-h) repeat(
       v-bind(countRows),
       var(--nc-cell-h)

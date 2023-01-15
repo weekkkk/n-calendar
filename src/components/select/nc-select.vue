@@ -38,6 +38,7 @@ const focus = ref(false);
     :position="PopoverPositionEnum.Bottom"
     @open="focus = true"
     @close="focus = false"
+    :width="272"
   >
     <nc-input
       class="w-100"
